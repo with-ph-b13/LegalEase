@@ -3,11 +3,14 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
 import { api } from "@/lib/api";
 
+type Role = "admin" | "public" | "lawyer";
+
 interface User {
   id: string;
   email: string;
   name: string;
   avatar?: string;
+  role: Role;
 }
 
 interface AuthContextType {
