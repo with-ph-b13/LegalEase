@@ -3,9 +3,9 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
 import { api } from "@/lib/api";
 
-type Role = "admin" | "public" | "lawyer";
+export type Role = "admin" | "user" | "lawyer";
 
-interface User {
+export interface AuthUser {
   id: string;
   email: string;
   name: string;
@@ -14,77 +14,115 @@ interface User {
 }
 
 interface AuthContextType {
-  user: User | null;
+  user: AuthUser | null;
   token: string | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  register: (email: string, password: string, name: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<AuthUser>;
+  register: (data: { name: string; email: string; password: string; role: Extract<Role, "user" | "lawyer"> }) => Promise<AuthUser>;
   logout: () => void;
+  refresh: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
+const TOKEN_KEY = "token";
+const USER_KEY = "user";
+
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const t = localStorage.getItem("token");
-    const u = localStorage.getItem("user");
-    if (t) {
-      setToken(t);
-      if (u) {
-        setUser(JSON.parse(u));
-        setLoading(false);
-      } else {
-        fetchUser(t).then((fetched) => {
-          if (fetched) {
-            localStorage.setItem("user", JSON.stringify(fetched));
-            setUser(fetched);
-          }
-          setLoading(false);
-        });
-      }
+  const persist = useCallback((nextToken: string | null, nextUser: AuthUser | null) => {
+    if (typeof window === "undefined") return;
+    if (nextToken) {
+      localStorage.setItem(TOKEN_KEY, nextToken);
     } else {
-      setLoading(false);
+      localStorage.removeItem(TOKEN_KEY);
+    }
+    if (nextUser) {
+      localStorage.setItem(USER_KEY, JSON.stringify(nextUser));
+    } else {
+      localStorage.removeItem(USER_KEY);
     }
   }, []);
 
-  async function fetchUser(t: string): Promise<User | null> {
+  const fetchUser = useCallback(async (t: string): Promise<AuthUser | null> => {
     try {
-      return await api.get<User>("/api/auth/me");
+      const me = await api.get<AuthUser>("/api/auth/me");
+      persist(t, me);
+      return me;
     } catch {
-      localStorage.removeItem("token");
+      persist(null, null);
       return null;
     }
-  }
+  }, [persist]);
+
+  useEffect(() => {
+    let cancelled = false;
+    const init = async () => {
+      if (typeof window === "undefined") {
+        setLoading(false);
+        return;
+      }
+      const t = localStorage.getItem(TOKEN_KEY);
+      const u = localStorage.getItem(USER_KEY);
+      if (!t) {
+        setLoading(false);
+        return;
+      }
+      setToken(t);
+      if (u) {
+        try {
+          setUser(JSON.parse(u) as AuthUser);
+        } catch {
+          localStorage.removeItem(USER_KEY);
+        }
+      }
+      const me = await fetchUser(t);
+      if (cancelled) return;
+      if (me) setUser(me);
+      setLoading(false);
+    };
+    init();
+    return () => {
+      cancelled = true;
+    };
+  }, [fetchUser]);
 
   const login = useCallback(async (email: string, password: string) => {
-    const data = await api.post<{ token: string; user: User }>("/api/auth/login", { email, password });
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
+    const data = await api.post<{ token: string; user: AuthUser }>("/api/auth/login", { email, password });
+    persist(data.token, data.user);
     setToken(data.token);
     setUser(data.user);
-  }, []);
+    return data.user;
+  }, [persist]);
 
-  const register = useCallback(async (email: string, password: string, name: string) => {
-    const data = await api.post<{ token: string; user: User }>("/api/auth/register", { email, password, name });
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
-    setToken(data.token);
-    setUser(data.user);
-  }, []);
+  const register = useCallback(
+    async (payload: { name: string; email: string; password: string; role: Extract<Role, "user" | "lawyer"> }) => {
+      const data = await api.post<{ token: string; user: AuthUser }>("/api/auth/register", payload);
+      persist(data.token, data.user);
+      setToken(data.token);
+      setUser(data.user);
+      return data.user;
+    },
+    [persist]
+  );
 
   const logout = useCallback(() => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    persist(null, null);
     setToken(null);
     setUser(null);
-  }, []);
+  }, [persist]);
+
+  const refresh = useCallback(async () => {
+    if (!token) return;
+    const me = await fetchUser(token);
+    if (me) setUser(me);
+  }, [token, fetchUser]);
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, register, logout }}>
+    <AuthContext.Provider value={{ user, token, loading, login, register, logout, refresh }}>
       {children}
     </AuthContext.Provider>
   );

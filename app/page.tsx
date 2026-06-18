@@ -4,19 +4,24 @@ import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
+import { toast } from "@/lib/toast";
 
 function HomeContent() {
-  const { token, loading } = useAuth();
+  const { token, loading, refresh } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
 
   useEffect(() => {
     const t = searchParams?.get("token");
-    if (t) {
+    if (!t) return;
+    if (typeof window !== "undefined") {
       localStorage.setItem("token", t);
-      router.replace("/dashboard");
     }
-  }, [searchParams, router]);
+    refresh().then(() => {
+      toast.success("Signed in with Google");
+      router.replace("/dashboard");
+    });
+  }, [searchParams, router, refresh]);
 
   useEffect(() => {
     if (!loading && token) {
@@ -29,15 +34,18 @@ function HomeContent() {
       <div className="hero-content flex-col lg:flex-row gap-12">
         <section className="max-w-2xl">
           <p className="text-sm uppercase tracking-[0.4em] text-secondary">LegalEase</p>
-          <h1 className="text-5xl font-bold">Legal document management, simplified</h1>
+          <h1 className="text-5xl font-bold">Find & hire expert legal counsel</h1>
           <p className="py-6 text-lg text-base-content/80">
-            Create, manage, and collaborate on legal documents with ease.
+            Browse verified lawyers, hire securely, and manage everything from one place.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Link href="/login" className="btn btn-primary">
-              Get started
+            <Link href="/browse" className="btn btn-primary">
+              Browse Lawyers
             </Link>
-            <Link href="/login" className="btn btn-outline">
+            <Link href="/register" className="btn btn-outline">
+              Create account
+            </Link>
+            <Link href="/login" className="btn btn-ghost">
               Sign in
             </Link>
           </div>
