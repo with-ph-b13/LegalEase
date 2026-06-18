@@ -1,4 +1,8 @@
 .PHONY: dev
 
 dev:
-	pnpm run --parallel -r dev
+	@echo "Starting backend..."
+	cd backend && pnpm dev &
+	@echo "Starting frontend..."
+	pnpm dev &
+	wait
