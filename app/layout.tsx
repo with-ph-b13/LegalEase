@@ -26,6 +26,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-theme="legalease"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-base-100 text-base-content font-sans">
