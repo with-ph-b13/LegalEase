@@ -1,10 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useRequireAuth } from "@/hooks/use-require-auth";
+import { useAuth } from "@/context/AuthContext";
+import { toast } from "@/lib/toast";
 
 export default function DashboardPage() {
+  const router = useRouter();
   const { user, loading, ready } = useRequireAuth();
+  const { logout } = useAuth();
 
   if (loading || !ready || !user) {
     return (
@@ -12,6 +17,12 @@ export default function DashboardPage() {
         <span className="loading loading-spinner loading-lg" />
       </div>
     );
+  }
+
+  function handleSignOut() {
+    logout();
+    toast.info("Signed out");
+    router.replace("/");
   }
 
   return (
@@ -23,8 +34,11 @@ export default function DashboardPage() {
           </Link>
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-sm text-base-content/70">{user.email}</span>
+          <span className="text-sm text-base-content/70 hidden sm:inline">{user.email}</span>
           <span className="badge badge-primary">{user.role}</span>
+          <button type="button" className="btn btn-ghost btn-sm" onClick={handleSignOut}>
+            Sign out
+          </button>
         </div>
       </header>
 
