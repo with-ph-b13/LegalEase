@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      { source: "/dashboard/user/update-profile", destination: "/dashboard/profile", permanent: true },
+    ];
+  },
   async rewrites() {
     if (process.env.NODE_ENV === "production" || process.env.VERCEL) {
       return [];
