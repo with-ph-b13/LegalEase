@@ -65,7 +65,7 @@ export function ShortlistProvider({ children }: { children: React.ReactNode }) {
           const ids: string[] = JSON.parse(local);
           if (ids.length > 0) {
             // Push all to backend
-            Promise.all(ids.map(id => api.post(`/api/shortlist/${id}`)))
+            Promise.all(ids.map(id => api.post(`/api/shortlist/${id}`, {})))
               .then(() => {
                 localStorage.removeItem("legalease_shortlist");
                 // Reload shortlist
@@ -106,7 +106,7 @@ export function ShortlistProvider({ children }: { children: React.ReactNode }) {
         if (isPresent) {
           await api.delete(`/api/shortlist/${lawyerId}`);
         } else {
-          await api.post(`/api/shortlist/${lawyerId}`);
+          await api.post(`/api/shortlist/${lawyerId}`, {});
         }
       } catch (err) {
         console.error("Failed to toggle shortlist on server", err);

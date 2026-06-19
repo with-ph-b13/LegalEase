@@ -33,7 +33,7 @@ export function Sidebar() {
     { href: "/dashboard/admin/transactions", label: "All Transactions" },
   ];
 
-  let links = [];
+  let links: { href: string; label: string }[] = [];
   if (role === "user") links = userLinks;
   else if (role === "lawyer") links = lawyerLinks;
   else if (role === "admin") links = adminLinks;
@@ -46,7 +46,7 @@ export function Sidebar() {
       <nav className="flex-1 p-4">
         <ul className="menu bg-base-200 w-full rounded-box gap-1">
           {links.map((link) => {
-            const isActive = pathname.startsWith(link.href);
+            const isActive = pathname?.startsWith(link.href) ?? false;
             return (
               <li key={link.href}>
                 <Link href={link.href} className={isActive ? "active" : ""}>

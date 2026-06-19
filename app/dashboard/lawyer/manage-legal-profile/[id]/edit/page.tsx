@@ -6,7 +6,7 @@ import { api } from "@/lib/api";
 import { LawyerProfileForm } from "@/components/dashboard/lawyer-profile-form";
 
 export default function EditLawyerProfilePage() {
-  const params = useParams();
+  const params = useParams() as { id: string };
   const router = useRouter();
   const [initialData, setInitialData] = useState<any>(null);
   const [loading, setLoading] = useState(true);

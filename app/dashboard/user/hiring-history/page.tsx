@@ -101,7 +101,7 @@ export default function HiringHistoryPage() {
                           className="btn btn-primary btn-sm" 
                           onClick={async () => {
                             try {
-                              const { url } = await api.post<{url: string}>(`/api/payments/hire/${hiring._id || hiring.id}`);
+                              const { url } = await api.post<{url: string}>(`/api/payments/hire/${hiring._id || hiring.id}`, {});
                               window.location.href = url;
                             } catch (err: any) {
                               alert(err.message || "Failed to initiate payment");

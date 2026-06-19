@@ -14,6 +14,7 @@ export interface LawyerData {
   status: "available" | "busy";
   imageUrl?: string;
   published: boolean;
+  userId?: string;
 }
 
 export function LawyerCard({ lawyer }: { lawyer: LawyerData }) {

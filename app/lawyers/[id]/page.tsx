@@ -8,7 +8,7 @@ import { CommentForm } from "@/components/lawyer/comment-form";
 import { CommentList } from "@/components/lawyer/comment-list";
 
 export default function LawyerDetailsPage() {
-  const params = useParams();
+  const params = useParams() as { id: string };
   const [lawyer, setLawyer] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);

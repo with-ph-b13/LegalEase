@@ -50,7 +50,7 @@ export default function UserCommentsPage() {
         text: editText,
         rating: editRating
       });
-      setComments(prev => prev.map(c => (c._id || c.id) === editingId ? { ...c, ...updated } : c));
+      setComments(prev => prev.map(c => (c._id || c.id) === editingId ? { ...c, ...updated as any } : c));
       setEditingId(null);
     } catch (err) {
       console.error("Failed to update comment", err);
