@@ -65,6 +65,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setLoading(false);
         return;
       }
+
+      // Check for OAuth token in URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlToken = urlParams.get("token");
+      if (urlToken) {
+        localStorage.setItem(TOKEN_KEY, urlToken);
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+
       const t = localStorage.getItem(TOKEN_KEY);
       const u = localStorage.getItem(USER_KEY);
       if (!t) {
