@@ -132,12 +132,19 @@ export default function ManageLegalProfilePage() {
                   </div>
                 </td>
                 <td>
-                  <button 
-                    onClick={handleTogglePublish}
-                    className={`btn btn-sm ${profile.published ? 'btn-success text-white' : 'btn-outline'}`}
-                  >
-                    {profile.published ? "Published" : "Draft"}
-                  </button>
+                  {profile.published ? (
+                    <button 
+                      onClick={handleTogglePublish}
+                      className="btn btn-sm btn-success text-white"
+                      title="Click to unpublish"
+                    >
+                      Published
+                    </button>
+                  ) : (
+                    <Link href="/dashboard/lawyer/publish" className="btn btn-sm btn-outline btn-primary">
+                      Pay to Publish
+                    </Link>
+                  )}
                 </td>
                 <td>
                   <Link href={`/dashboard/lawyer/manage-legal-profile/${profile._id}/edit`} className="btn btn-ghost btn-xs">Edit</Link>

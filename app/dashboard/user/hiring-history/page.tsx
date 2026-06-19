@@ -97,9 +97,23 @@ export default function HiringHistoryPage() {
                     </td>
                     <td>
                       {hiring.status === "accepted" ? (
-                        <button className="btn btn-primary btn-sm" disabled>Pay Now</button>
+                        <button 
+                          className="btn btn-primary btn-sm" 
+                          onClick={async () => {
+                            try {
+                              const { url } = await api.post<{url: string}>(`/api/payments/hire/${hiring._id || hiring.id}`);
+                              window.location.href = url;
+                            } catch (err: any) {
+                              alert(err.message || "Failed to initiate payment");
+                            }
+                          }}
+                        >
+                          Pay Now
+                        </button>
+                      ) : hiring.status === "paid" ? (
+                        <span className="text-success font-medium text-sm">Paid ✓</span>
                       ) : (
-                        <button className="btn btn-ghost btn-sm" disabled>Waiting...</button>
+                        <span className="text-base-content/50 italic text-sm">Waiting...</span>
                       )}
                     </td>
                   </tr>
