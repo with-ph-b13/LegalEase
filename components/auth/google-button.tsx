@@ -2,9 +2,9 @@
 
 import { getGoogleAuthUrl } from "@/lib/api";
 
-export default function GoogleButton({ label = "Continue with Google" }: { label?: string }) {
+export default function GoogleButton({ label = "Continue with Google", role }: { label?: string; role?: string }) {
   return (
-    <a href={getGoogleAuthUrl()} className="btn btn-outline w-full">
+    <a href={getGoogleAuthUrl(role)} className="btn btn-outline w-full">
       <svg
         aria-hidden="true"
         viewBox="0 0 48 48"

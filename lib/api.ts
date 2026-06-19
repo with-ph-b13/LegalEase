@@ -38,6 +38,9 @@ export const api = {
   delete: <T>(path: string) => request<T>(path, { method: "DELETE" }),
 };
 
-export function getGoogleAuthUrl(): string {
+export function getGoogleAuthUrl(role?: string): string {
+  if (role) {
+    return `${BASE_URL}/api/auth/google?state=${role}`;
+  }
   return `${BASE_URL}/api/auth/google`;
 }

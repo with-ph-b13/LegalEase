@@ -153,7 +153,7 @@ export default function RegisterForm() {
 
         <div className="divider">or</div>
 
-        <GoogleButton label="Sign up with Google" />
+        <GoogleButton label="Sign up with Google" role={role} />
 
         <p className="text-sm text-center mt-4">
           Already have an account?{" "}
