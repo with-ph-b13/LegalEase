@@ -14,9 +14,10 @@ export function Sidebar() {
 
   const userLinks = [
     { href: "/dashboard/user/hiring-history", label: "Hiring history" },
-    { href: "/dashboard/user/update-profile", label: "Update profile" },
+    { href: "/dashboard/user/transactions", label: "Transactions" },
     { href: "/dashboard/user/comments", label: "Comments" },
     { href: "/dashboard/user/shortlist", label: "Shortlist" },
+    { href: "/dashboard/user/update-profile", label: "Update profile" },
   ];
 
   const lawyerLinks = [
