@@ -16,7 +16,7 @@ export function useBrowseState() {
     minFee: getParam("minFee"),
     maxFee: getParam("maxFee"),
     available: getParam("available") === "true",
-    sort: getParam("sort") || "Most hired",
+    sort: getParam("sort") || "hired",
     page: parseInt(getParam("page") || "1", 10),
   };
 

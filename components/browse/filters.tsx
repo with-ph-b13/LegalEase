@@ -101,10 +101,11 @@ export function Filters() {
           value={state.sort}
           onChange={(e) => setParams({ sort: e.target.value })}
         >
-          <option value="Most hired">Most hired</option>
-          <option value="Newest">Newest</option>
-          <option value="Fee low→high">Fee low→high</option>
-          <option value="Fee high→low">Fee high→low</option>
+          <option value="hired">Most hired</option>
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+          <option value="fee_asc">Fee low→high</option>
+          <option value="fee_desc">Fee high→low</option>
         </select>
       </div>
     </div>
