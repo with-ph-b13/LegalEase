@@ -1,16 +1,34 @@
 "use client";
 
-import Image from "next/image";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 import type { LawyerData } from "@/components/browse/lawyer-card";
+import { HireModal } from "./hire-modal";
 
 export function DetailsHeader({ lawyer }: { lawyer: LawyerData }) {
+  const { user } = useAuth();
+  const router = useRouter();
+  const [showModal, setShowModal] = useState(false);
+
+  // If user is logged in as lawyer and it's their own profile
+  const isOwnProfile = user?.role === "lawyer" && lawyer.userId === user.id;
+
+  const handleHireClick = () => {
+    if (!user) {
+      router.push("/login");
+      return;
+    }
+    setShowModal(true);
+  };
+
   return (
     <div className="bg-base-100 rounded-xl shadow-sm border border-base-200 overflow-hidden mb-8">
       <div className="h-32 bg-primary/10"></div>
       <div className="px-6 sm:px-10 pb-8 flex flex-col sm:flex-row gap-6 sm:items-end -mt-16 relative">
         
         <div className="avatar">
-          <div className="w-32 h-32 rounded-full ring-4 ring-base-100 bg-base-200">
+          <div className="w-32 h-32 rounded-full ring-4 ring-base-100 bg-base-200 overflow-hidden">
             {lawyer.imageUrl ? (
               <img 
                 src={lawyer.imageUrl} 
@@ -41,11 +59,20 @@ export function DetailsHeader({ lawyer }: { lawyer: LawyerData }) {
           <div className="text-2xl font-bold text-primary">
             ${lawyer.fee} <span className="text-sm text-base-content/60 font-normal">/ hr</span>
           </div>
-          <button className="btn btn-primary w-full sm:w-auto px-8">
-            Hire Now
-          </button>
+          {!isOwnProfile && (
+            <button 
+              className="btn btn-primary w-full sm:w-auto px-8"
+              onClick={handleHireClick}
+            >
+              {user ? "Hire Now" : "Sign in to hire"}
+            </button>
+          )}
         </div>
       </div>
+
+      {showModal && (
+        <HireModal lawyer={lawyer} onClose={() => setShowModal(false)} />
+      )}
     </div>
   );
 }
