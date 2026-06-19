@@ -2,14 +2,13 @@
 
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { useToast } from "@/context/ToastContext";
+import { toast } from "@/lib/toast";
 import { api } from "@/lib/api";
 import { Loader2, Save, User, Camera } from "lucide-react";
 import Image from "next/image";
 
 export default function ProfilePage() {
   const { user, refresh } = useAuth();
-  const { toast } = useToast();
   
   const [name, setName] = useState(user?.name || "");
   const [avatar, setAvatar] = useState(user?.avatar || "");
@@ -33,13 +32,13 @@ export default function ProfilePage() {
       const data = await res.json();
       if (data.success) {
         setAvatar(data.data.url);
-        toast("Image uploaded successfully!", "success");
+        toast.success("Image uploaded successfully!");
       } else {
         throw new Error("Failed to upload image");
       }
     } catch (err) {
       console.error(err);
-      toast("Image upload failed.", "error");
+      toast.error("Image upload failed.");
     } finally {
       setIsUploading(false);
     }
@@ -50,10 +49,10 @@ export default function ProfilePage() {
     setIsSubmitting(true);
     try {
       await api.patch("/api/auth/me", { name, avatar });
-      toast("Profile updated successfully!", "success");
+      toast.success("Profile updated successfully!");
       await refresh();
     } catch (err: any) {
-      toast(err.message || "Failed to update profile", "error");
+      toast.error(err.message || "Failed to update profile");
     } finally {
       setIsSubmitting(false);
     }
