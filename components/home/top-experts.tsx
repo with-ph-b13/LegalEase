@@ -12,8 +12,8 @@ export function TopExperts() {
   useEffect(() => {
     async function fetchTop() {
       try {
-        const res = await api.get<LawyerData[]>("/api/lawyers/top");
-        setLawyers(res.slice(0, 3));
+        const res = await api.get<{ data: LawyerData[] }>("/api/lawyers/top");
+        setLawyers(res.data.slice(0, 3));
       } catch (err) {
         console.error("Failed to fetch top experts", err);
       } finally {

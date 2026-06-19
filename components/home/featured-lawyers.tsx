@@ -12,9 +12,9 @@ export function FeaturedLawyers() {
   useEffect(() => {
     async function fetchFeatured() {
       try {
-        const res = await api.get<LawyerData[]>("/api/lawyers/featured");
+        const res = await api.get<{ data: LawyerData[] }>("/api/lawyers/featured");
         // Shuffle client-side to satisfy "fresh random order on reload" if backend doesn't randomize
-        const shuffled = [...res].sort(() => 0.5 - Math.random());
+        const shuffled = [...res.data].sort(() => 0.5 - Math.random());
         setLawyers(shuffled.slice(0, 6));
       } catch (err) {
         console.error("Failed to fetch featured lawyers", err);
