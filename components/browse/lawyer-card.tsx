@@ -1,0 +1,57 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+
+export interface LawyerData {
+  _id: string;
+  name: string;
+  specialization: string;
+  fee: number;
+  status: "available" | "busy";
+  imageUrl?: string;
+  published: boolean;
+}
+
+export function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
+  return (
+    <article className="card bg-base-100 shadow-xl border border-base-200 flex flex-col h-full overflow-hidden transition-shadow hover:shadow-2xl">
+      <div className="p-6 flex flex-col items-center flex-1">
+        <div className="avatar mb-4 relative">
+          <div className="w-24 h-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 overflow-hidden bg-base-200">
+            {lawyer.imageUrl ? (
+              <Image 
+                src={lawyer.imageUrl} 
+                alt={`${lawyer.name}'s profile picture`}
+                width={96}
+                height={96}
+                className="object-cover"
+              />
+            ) : (
+              <div className="flex items-center justify-center w-full h-full text-3xl font-bold text-neutral-content">
+                {lawyer.name.charAt(0).toUpperCase()}
+              </div>
+            )}
+          </div>
+          {lawyer.status === "busy" && (
+            <span className="badge badge-warning absolute -bottom-2 -right-4 z-10 font-bold shadow-sm">
+              Busy
+            </span>
+          )}
+        </div>
+        <h2 className="card-title text-center leading-tight mb-1">{lawyer.name}</h2>
+        <p className="text-sm text-base-content/70 mb-4">{lawyer.specialization}</p>
+        <div className="mt-auto w-full flex justify-between items-center bg-base-200/50 p-3 rounded-lg">
+          <div className="text-sm">
+            <span className="font-bold">${lawyer.fee}</span> / hr
+          </div>
+        </div>
+      </div>
+      <div className="bg-base-200 p-4 border-t border-base-300">
+        <Link href={`/lawyers/${lawyer._id}`} className="btn btn-primary w-full btn-sm">
+          View Details
+        </Link>
+      </div>
+    </article>
+  );
+}
