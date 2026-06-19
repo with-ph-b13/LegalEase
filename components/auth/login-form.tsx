@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Mail, Lock, ArrowRight, Loader2 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "@/lib/toast";
 import GoogleButton from "./google-button";
+import PasswordInput from "./password-input";
 
 export default function LoginForm() {
   const { login } = useAuth();
@@ -33,59 +35,82 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="card bg-base-100 w-full shadow-2xl">
-      <form className="card-body" onSubmit={handleSubmit}>
-        <h2 className="card-title text-2xl font-bold mb-2">Sign in</h2>
+    <form className="space-y-5" onSubmit={handleSubmit}>
+      {error && (
+        <div className="alert alert-error text-sm py-2 rounded-lg">
+          <span>{error}</span>
+        </div>
+      )}
 
-        {error && <div className="alert alert-error text-sm py-2">{error}</div>}
-
-        <div className="form-control">
-          <label className="label" htmlFor="email">
-            <span className="label-text">Email</span>
-          </label>
+      <div className="form-control w-full">
+        <label className="label py-1" htmlFor="email">
+          <span className="label-text font-medium">Email</span>
+        </label>
+        <div className="relative">
+          <Mail className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-base-content/40 pointer-events-none" />
           <input
             id="email"
             type="email"
-            className="input input-bordered"
+            placeholder="you@example.com"
+            className="input input-bordered w-full pl-10 focus:outline-primary transition-all"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
             autoComplete="email"
           />
         </div>
+      </div>
 
-        <div className="form-control">
-          <label className="label" htmlFor="password">
-            <span className="label-text">Password</span>
-          </label>
-          <input
+      <div className="form-control w-full">
+        <label className="label py-1" htmlFor="password">
+          <span className="label-text font-medium">Password</span>
+        </label>
+        <div className="relative">
+          <Lock className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-base-content/40 pointer-events-none z-10" />
+          <PasswordInput
             id="password"
-            type="password"
-            className="input input-bordered"
+            placeholder="Enter your password"
+            className="pl-10"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
             autoComplete="current-password"
           />
         </div>
+      </div>
 
-        <div className="form-control mt-4">
-          <button className="btn btn-primary" type="submit" disabled={submitting}>
-            {submitting ? <span className="loading loading-spinner loading-sm" /> : "Sign in"}
-          </button>
-        </div>
+      <button
+        className="btn btn-primary w-full shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all"
+        type="submit"
+        disabled={submitting}
+      >
+        {submitting ? (
+          <>
+            <Loader2 className="w-4 h-4 animate-spin" />
+            Signing in...
+          </>
+        ) : (
+          <>
+            Sign in
+            <ArrowRight className="w-4 h-4" />
+          </>
+        )}
+      </button>
 
-        <div className="divider">or</div>
+      <div className="flex items-center gap-3 my-2">
+        <div className="flex-1 h-px bg-base-300" />
+        <span className="text-xs uppercase tracking-wider text-base-content/50">or</span>
+        <div className="flex-1 h-px bg-base-300" />
+      </div>
 
-        <GoogleButton />
+      <GoogleButton label="Continue with Google" />
 
-        <p className="text-sm text-center mt-4">
-          Don&apos;t have an account?{" "}
-          <Link href="/register" className="link link-primary">
-            Register
-          </Link>
-        </p>
-      </form>
-    </div>
+      <p className="text-sm text-center text-base-content/70 pt-2">
+        Don&apos;t have an account?{" "}
+        <Link href="/register" className="link link-primary font-medium">
+          Create one
+        </Link>
+      </p>
+    </form>
   );
 }

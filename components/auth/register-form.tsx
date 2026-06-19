@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { User, Mail, Lock, ArrowRight, Loader2, Briefcase, Search } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "@/lib/toast";
 import GoogleButton from "./google-button";
+import PasswordInput from "./password-input";
 
 type RoleChoice = "user" | "lawyer";
 
@@ -48,20 +50,24 @@ export default function RegisterForm() {
   }
 
   return (
-    <div className="card bg-base-100 w-full shadow-2xl">
-      <form className="card-body" onSubmit={handleSubmit}>
-        <h2 className="card-title text-2xl font-bold mb-2">Create account</h2>
+    <form className="space-y-4" onSubmit={handleSubmit}>
+      {error && (
+        <div className="alert alert-error text-sm py-2 rounded-lg">
+          <span>{error}</span>
+        </div>
+      )}
 
-        {error && <div className="alert alert-error text-sm py-2">{error}</div>}
-
-        <div className="form-control">
-          <label className="label" htmlFor="name">
-            <span className="label-text">Full name</span>
-          </label>
+      <div className="form-control w-full">
+        <label className="label py-1" htmlFor="name">
+          <span className="label-text font-medium">Full name</span>
+        </label>
+        <div className="relative">
+          <User className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-base-content/40 pointer-events-none" />
           <input
             id="name"
             type="text"
-            className="input input-bordered"
+            placeholder="John Doe"
+            className="input input-bordered w-full pl-10 focus:outline-primary transition-all"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
@@ -70,98 +76,121 @@ export default function RegisterForm() {
             autoComplete="name"
           />
         </div>
+      </div>
 
-        <div className="form-control">
-          <label className="label" htmlFor="email">
-            <span className="label-text">Email</span>
-          </label>
+      <div className="form-control w-full">
+        <label className="label py-1" htmlFor="email">
+          <span className="label-text font-medium">Email</span>
+        </label>
+        <div className="relative">
+          <Mail className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-base-content/40 pointer-events-none" />
           <input
             id="email"
             type="email"
-            className="input input-bordered"
+            placeholder="you@example.com"
+            className="input input-bordered w-full pl-10 focus:outline-primary transition-all"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
             autoComplete="email"
           />
         </div>
+      </div>
 
-        <div className="form-control">
-          <label className="label" htmlFor="password">
-            <span className="label-text">Password</span>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="form-control w-full">
+          <label className="label py-1" htmlFor="password">
+            <span className="label-text font-medium">Password</span>
           </label>
-          <input
-            id="password"
-            type="password"
-            className="input input-bordered"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            minLength={6}
-            autoComplete="new-password"
-          />
-        </div>
-
-        <div className="form-control">
-          <label className="label" htmlFor="confirm">
-            <span className="label-text">Confirm password</span>
-          </label>
-          <input
-            id="confirm"
-            type="password"
-            className="input input-bordered"
-            value={confirm}
-            onChange={(e) => setConfirm(e.target.value)}
-            required
-            autoComplete="new-password"
-          />
-        </div>
-
-        <div className="form-control mt-2">
-          <span className="label-text mb-2">I want to</span>
-          <div className="flex flex-col sm:flex-row gap-2">
-            <label className="label cursor-pointer flex-1 border border-base-300 rounded-lg px-3 py-2 gap-3">
-              <input
-                type="radio"
-                name="role"
-                className="radio radio-primary"
-                value="user"
-                checked={role === "user"}
-                onChange={() => setRole("user")}
-              />
-              <span className="label-text">Hire a lawyer</span>
-            </label>
-            <label className="label cursor-pointer flex-1 border border-base-300 rounded-lg px-3 py-2 gap-3">
-              <input
-                type="radio"
-                name="role"
-                className="radio radio-primary"
-                value="lawyer"
-                checked={role === "lawyer"}
-                onChange={() => setRole("lawyer")}
-              />
-              <span className="label-text">Offer legal services</span>
-            </label>
+          <div className="relative">
+            <Lock className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-base-content/40 pointer-events-none z-10" />
+            <PasswordInput
+              id="password"
+              placeholder="At least 6 characters"
+              className="pl-10"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              autoComplete="new-password"
+            />
           </div>
         </div>
 
-        <div className="form-control mt-4">
-          <button className="btn btn-primary" type="submit" disabled={submitting}>
-            {submitting ? <span className="loading loading-spinner loading-sm" /> : "Create account"}
-          </button>
+        <div className="form-control w-full">
+          <label className="label py-1" htmlFor="confirm">
+            <span className="label-text font-medium">Confirm</span>
+          </label>
+          <div className="relative">
+            <Lock className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-base-content/40 pointer-events-none z-10" />
+            <PasswordInput
+              id="confirm"
+              placeholder="Repeat password"
+              className="pl-10"
+              value={confirm}
+              onChange={(e) => setConfirm(e.target.value)}
+              required
+              autoComplete="new-password"
+            />
+          </div>
         </div>
+      </div>
 
-        <div className="divider">or</div>
+      <div className="form-control">
+        <span className="label-text font-medium mb-2">I want to</span>
+        <div className="grid grid-cols-2 gap-2">
+          {[
+            { value: "user" as const, label: "Hire a lawyer", icon: Search },
+            { value: "lawyer" as const, label: "Offer services", icon: Briefcase },
+          ].map(({ value, label, icon: Icon }) => (
+            <button
+              type="button"
+              key={value}
+              onClick={() => setRole(value)}
+              className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border transition-all text-sm font-medium ${
+                role === value
+                  ? "border-primary bg-primary/10 text-primary"
+                  : "border-base-300 hover:border-base-content/30"
+              }`}
+            >
+              <Icon className="w-4 h-4" />
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
 
-        <GoogleButton label="Sign up with Google" role={role} />
+      <button
+        className="btn btn-primary w-full shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all"
+        type="submit"
+        disabled={submitting}
+      >
+        {submitting ? (
+          <>
+            <Loader2 className="w-4 h-4 animate-spin" />
+            Creating account...
+          </>
+        ) : (
+          <>
+            Create account
+            <ArrowRight className="w-4 h-4" />
+          </>
+        )}
+      </button>
 
-        <p className="text-sm text-center mt-4">
-          Already have an account?{" "}
-          <Link href="/login" className="link link-primary">
-            Sign in
-          </Link>
-        </p>
-      </form>
-    </div>
+      <div className="flex items-center gap-3 my-2">
+        <div className="flex-1 h-px bg-base-300" />
+        <span className="text-xs uppercase tracking-wider text-base-content/50">or</span>
+        <div className="flex-1 h-px bg-base-300" />
+      </div>
+
+      <GoogleButton label="Sign up with Google" role={role} />
+
+      <p className="text-sm text-center text-base-content/70 pt-2">
+        Already have an account?{" "}
+        <Link href="/login" className="link link-primary font-medium">
+          Sign in
+        </Link>
+      </p>
+    </form>
   );
 }
