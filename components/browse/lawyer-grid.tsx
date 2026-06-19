@@ -54,8 +54,8 @@ export function LawyerGrid({
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-      {lawyers.map((lawyer) => (
-        <LawyerCard key={lawyer._id} lawyer={lawyer} />
+      {lawyers.map((lawyer, index) => (
+        <LawyerCard key={lawyer._id || lawyer.id || index} lawyer={lawyer} />
       ))}
     </div>
   );

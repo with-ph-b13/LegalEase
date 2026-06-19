@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 export interface LawyerData {
-  _id: string;
+  _id?: string;
+  id?: string;
   name: string;
   specialization: string;
   fee: number;
@@ -48,7 +49,7 @@ export function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
         </div>
       </div>
       <div className="bg-base-200 p-4 border-t border-base-300">
-        <Link href={`/lawyers/${lawyer._id}`} className="btn btn-primary w-full btn-sm">
+        <Link href={`/lawyers/${lawyer._id || lawyer.id}`} className="btn btn-primary w-full btn-sm">
           View Details
         </Link>
       </div>
