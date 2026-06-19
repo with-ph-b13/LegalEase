@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
     ],
   },
   async rewrites() {
+    if (process.env.NODE_ENV === "production" || process.env.VERCEL) {
+      return [];
+    }
     return [
       {
         source: "/api/:path*",
