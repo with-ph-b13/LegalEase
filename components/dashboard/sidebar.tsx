@@ -27,8 +27,9 @@ export function Sidebar() {
   ];
 
   const adminLinks = [
-    { href: "/dashboard/admin/users", label: "Manage users" },
-    { href: "/dashboard/admin/settings", label: "Settings" },
+    { href: "/dashboard/admin/users", label: "Manage Users" },
+    { href: "/dashboard/admin/manage-lawyers", label: "Manage Lawyers" },
+    { href: "/dashboard/admin/transactions", label: "All Transactions" },
   ];
 
   let links = [];
