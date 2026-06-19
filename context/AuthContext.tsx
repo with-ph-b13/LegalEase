@@ -11,6 +11,7 @@ export interface AuthUser {
   name: string;
   avatar?: string;
   role: Role;
+  hasPassword?: boolean;
 }
 
 interface AuthContextType {
