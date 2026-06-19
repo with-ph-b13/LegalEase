@@ -12,12 +12,10 @@ export function DetailsHeader({ lawyer }: { lawyer: LawyerData }) {
         <div className="avatar">
           <div className="w-32 h-32 rounded-full ring-4 ring-base-100 bg-base-200">
             {lawyer.imageUrl ? (
-              <Image 
+              <img 
                 src={lawyer.imageUrl} 
                 alt={lawyer.name}
-                width={128}
-                height={128}
-                className="object-cover"
+                className="object-cover w-full h-full"
               />
             ) : (
               <div className="flex items-center justify-center w-full h-full text-4xl font-bold text-neutral-content">

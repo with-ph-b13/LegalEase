@@ -21,12 +21,10 @@ export function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
         <div className="avatar mb-4 relative">
           <div className="w-24 h-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 overflow-hidden bg-base-200">
             {lawyer.imageUrl ? (
-              <Image 
+              <img 
                 src={lawyer.imageUrl} 
                 alt={`${lawyer.name}'s profile picture`}
-                width={96}
-                height={96}
-                className="object-cover"
+                className="object-cover w-full h-full"
               />
             ) : (
               <div className="flex items-center justify-center w-full h-full text-3xl font-bold text-neutral-content">
