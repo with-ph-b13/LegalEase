@@ -1,42 +1,60 @@
-"use client";
+type ToastType = "success" | "error" | "info" | "warning";
 
-export type ToastKind = "success" | "error" | "info" | "warning";
-
-export interface ToastEvent {
+export interface ToastMessage {
   id: string;
-  kind: ToastKind;
   message: string;
-  duration?: number;
+  type: ToastType;
 }
 
-type Listener = (event: ToastEvent) => void;
+type ToastListener = (toasts: ToastMessage[]) => void;
 
-const listeners = new Set<Listener>();
+class ToastManager {
+  private toasts: ToastMessage[] = [];
+  private listeners: Set<ToastListener> = new Set();
 
-export function subscribeToasts(fn: Listener): () => void {
-  listeners.add(fn);
-  return () => listeners.delete(fn);
+  public subscribe(listener: ToastListener) {
+    this.listeners.add(listener);
+    listener([...this.toasts]);
+    return () => {
+      this.listeners.delete(listener);
+    };
+  }
+
+  private notify() {
+    this.listeners.forEach((listener) => listener([...this.toasts]));
+  }
+
+  public show(message: string, type: ToastType = "info", duration = 4000) {
+    const id = Math.random().toString(36).substring(2, 9);
+    const toast = { id, message, type };
+    this.toasts.push(toast);
+    this.notify();
+
+    setTimeout(() => {
+      this.dismiss(id);
+    }, duration);
+  }
+
+  public success(message: string, duration?: number) {
+    this.show(message, "success", duration);
+  }
+
+  public error(message: string, duration?: number) {
+    this.show(message, "error", duration);
+  }
+
+  public info(message: string, duration?: number) {
+    this.show(message, "info", duration);
+  }
+
+  public warning(message: string, duration?: number) {
+    this.show(message, "warning", duration);
+  }
+
+  public dismiss(id: string) {
+    this.toasts = this.toasts.filter((t) => t.id !== id);
+    this.notify();
+  }
 }
 
-function emit(event: ToastEvent) {
-  listeners.forEach((fn) => fn(event));
-}
-
-function makeId() {
-  return Math.random().toString(36).slice(2, 10);
-}
-
-export const toast = {
-  success(message: string, duration = 3500) {
-    emit({ id: makeId(), kind: "success", message, duration });
-  },
-  error(message: string, duration = 5000) {
-    emit({ id: makeId(), kind: "error", message, duration });
-  },
-  info(message: string, duration = 3500) {
-    emit({ id: makeId(), kind: "info", message, duration });
-  },
-  warning(message: string, duration = 4000) {
-    emit({ id: makeId(), kind: "warning", message, duration });
-  },
-};
+export const toast = new ToastManager();

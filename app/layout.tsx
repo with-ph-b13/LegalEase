@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { AuthProvider } from "@/context/AuthContext";
 import { ShortlistProvider } from "@/context/ShortlistContext";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { ToastProvider } from "@/components/ui/toast-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import "./globals.css";
@@ -36,6 +37,7 @@ export default function RootLayout({
         <AuthProvider>
           <ShortlistProvider>
             <ThemeProvider>
+              <ToastProvider />
               <Navbar />
               <div className="flex-1">{children}</div>
               <Footer />
