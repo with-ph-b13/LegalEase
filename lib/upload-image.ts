@@ -1,3 +1,5 @@
+import { api } from "./api";
+
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/gif", "image/webp"];
 
@@ -8,6 +10,27 @@ export class ImageUploadError extends Error {
   }
 }
 
+function fileToBase64(file: File): Promise<{ data: string; mime: string }> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result;
+      if (typeof result !== "string") {
+        reject(new ImageUploadError("Failed to read file"));
+        return;
+      }
+      const match = result.match(/^data:([^;]+);base64,(.+)$/);
+      if (!match) {
+        reject(new ImageUploadError("Unexpected file format"));
+        return;
+      }
+      resolve({ data: match[2], mime: match[1] });
+    };
+    reader.onerror = () => reject(new ImageUploadError("Failed to read file"));
+    reader.readAsDataURL(file);
+  });
+}
+
 export async function uploadImage(file: File): Promise<string> {
   if (!ALLOWED_TYPES.includes(file.type)) {
     throw new ImageUploadError("Only JPEG, PNG, GIF, or WebP images are allowed");
@@ -16,27 +39,11 @@ export async function uploadImage(file: File): Promise<string> {
     throw new ImageUploadError("Image must be smaller than 5MB");
   }
 
-  const apiKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
-  if (!apiKey) {
-    throw new ImageUploadError("Image upload is not configured");
-  }
+  const { data, mime } = await fileToBase64(file);
 
-  const formData = new FormData();
-  formData.append("image", file);
-
-  const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
-    method: "POST",
-    body: formData,
+  const body = await api.post<{ url: string }>("/api/upload/image", {
+    image: `data:${mime};base64,${data}`,
+    name: file.name,
   });
-
-  if (!res.ok) {
-    const errorData = await res.json().catch(() => ({}));
-    throw new ImageUploadError(errorData.error?.message || "Failed to upload image");
-  }
-
-  const data = await res.json();
-  if (!data?.data?.url) {
-    throw new ImageUploadError("Upload succeeded but no URL was returned");
-  }
-  return data.data.url as string;
+  return body.url;
 }
