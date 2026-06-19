@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LegalEase ⚖️
 
-## Getting Started
+LegalEase is a premium, modern legal consultation marketplace connecting clients with top-tier legal experts. Clients can browse lawyer profiles, request consultations, manage their hiring history, make secure payments using Stripe, and leave ratings/reviews. Lawyers can manage their profiles, toggle availability/publish status, and track their billing history.
 
-First, run the development server:
+## Live URL
+🔗 **[LegalEase Platform (Placeholder)](https://legalease-marketplace.vercel.app)**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🌟 Key Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 👤 User Roles & Dashboard Shells
+- **Client (User):** Request consultations, pay hiring fees securely, track hire requests, and review lawyers.
+- **Lawyer:** Customize legal profile, publish/unpublish, accept/reject consultations, and track revenue.
+- **Admin:** Promote users, moderate profiles (publish/unpublish/delete), monitor platform-wide transactions, and view interactive charts/KPIs.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 💳 Stripe Payments Infrastructure
+- **Pay to Publish:** Lawyers pay a one-time publishing fee of $99 to activate their profile publicly.
+- **Hiring Fee:** Clients make secure payments to confirm booking consultations.
+- **Financial Auditability:** Secure Stripe webhook signature validation with demo fallback. Fully logged transactions.
 
-## Learn More
+### ⚙️ Polish & Security
+- **Shortlist:** Add profiles to shortlist with localized guest caching that syncs to database upon registration.
+- **Dark Mode:** Global DaisyUI 5 state manager with OS preference detection and persistent toggle.
+- **Email Notifications:** Logged in `backend/logs/emails.log` upon signup, payment completion, hiring request updates, or new reviews.
+- **Auto-Unpublish:** Profiles automatically unpublish if active cases reach `UNPUBLISH_THRESHOLD` (default 10).
+- **Rate Limiting:** IP limits for Authentication (100 reqs/15m) and Payments (30 reqs/m) via `express-rate-limit`.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Technology Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Frontend:** Next.js (App Router), Tailwind CSS (v4), DaisyUI (v5), Lucide React, Recharts
+- **Backend:** Node.js, Express, MongoDB (Mongoose), Passport.js (Google OAuth), JWT, Stripe SDK, Zod, express-rate-limit
+- **State Management:** React Context (Auth, Theme, Shortlist)
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📦 Project Setup
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Prerequisites
+- Node.js (v18+)
+- pnpm (v11+)
+- MongoDB running locally or a MongoDB Atlas URI
+
+### Installation
+1. Clone the repository and install dependencies in the root:
+   ```bash
+   pnpm install
+   ```
+
+2. Create environment configurations:
+   - Backend env: `/backend/.env` (refer to `/backend/.env.example`)
+   - Frontend env: `/.env.local`
+
+3. Seed the database:
+   ```bash
+   pnpm --filter legalease-backend run seed
+   ```
+
+4. Start both servers concurrently:
+   ```bash
+   pnpm dev
+   ```
+
+---
+
+## 🔑 Demo Accounts
+
+To test the application, you can use the seeded demo accounts:
+
+| Role | Email | Password |
+|---|---|---|
+| **Admin** | `admin@legalease.com` | `admin123` |
+| **Lawyer** | `jane@smith.com` | `password123` |
+| **Client** | `john@doe.com` | `password123` |
+
+---
+
+## 📜 Development Scripts
+
+Run scripts from the workspace root using pnpm:
+
+- `pnpm dev` — Start Next.js and backend concurrent servers
+- `pnpm install` — Install all workspace dependencies
+- `pnpm --filter legalease-backend run seed` — Seed the MongoDB database
+- `pnpm --filter legalease-backend run build` — Build backend TypeScript source
