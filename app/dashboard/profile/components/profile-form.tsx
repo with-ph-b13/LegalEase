@@ -20,7 +20,9 @@ export default function ProfileForm() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      await api.patch("/api/auth/me", { name, email, avatar });
+      const payload: Record<string, unknown> = { name, avatar };
+      if (email !== user.email) payload.email = email;
+      await api.patch("/api/auth/me", payload);
       toast.success("Profile updated successfully!");
       await refresh();
     } catch (err: any) {
@@ -75,11 +77,6 @@ export default function ProfileForm() {
                   autoComplete="email"
                 />
               </div>
-              <label className="label">
-                <span className="label-text-alt text-base-content/50">
-                  Use the password section below to confirm sensitive changes.
-                </span>
-              </label>
             </div>
 
             <div className="form-control w-full">

@@ -3,7 +3,6 @@
 import { useAuth } from "@/context/AuthContext";
 import ProfileForm from "./components/profile-form";
 import PasswordForm from "./components/password-form";
-import PasswordBlocked from "./components/password-blocked";
 
 export default function ProfilePage() {
   const { user } = useAuth();
@@ -18,7 +17,7 @@ export default function ProfilePage() {
       </div>
 
       <ProfileForm />
-      {user?.hasPassword ? <PasswordForm /> : <PasswordBlocked />}
+      <PasswordForm hasPassword={Boolean(user?.hasPassword)} />
     </div>
   );
 }

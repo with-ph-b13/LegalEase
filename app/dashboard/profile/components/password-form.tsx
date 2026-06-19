@@ -3,9 +3,9 @@
 import { useState, type FormEvent } from "react";
 import { toast } from "@/lib/toast";
 import { api } from "@/lib/api";
-import { Loader2, Lock } from "lucide-react";
+import { Loader2, Lock, KeyRound } from "lucide-react";
 
-export default function PasswordForm() {
+export default function PasswordForm({ hasPassword }: { hasPassword: boolean }) {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -15,18 +15,20 @@ export default function PasswordForm() {
     e.preventDefault();
 
     if (newPassword.length < 6) {
-      toast.error("New password must be at least 6 characters");
+      toast.error("Password must be at least 6 characters");
       return;
     }
     if (newPassword !== confirmPassword) {
-      toast.error("New passwords do not match");
+      toast.error("Passwords do not match");
       return;
     }
 
     setSubmitting(true);
     try {
-      await api.patch("/api/auth/me", { currentPassword, newPassword });
-      toast.success("Password updated successfully!");
+      const payload: Record<string, unknown> = { newPassword };
+      if (hasPassword) payload.currentPassword = currentPassword;
+      await api.patch("/api/auth/me", payload);
+      toast.success(hasPassword ? "Password updated successfully!" : "Password set successfully!");
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
@@ -37,42 +39,49 @@ export default function PasswordForm() {
     }
   };
 
+  const title = hasPassword ? "Change Password" : "Set a Password";
+  const description = hasPassword
+    ? "Update your password to keep your account secure."
+    : "Add a password to your Google account so you can also sign in with email.";
+  const buttonLabel = hasPassword ? "Update Password" : "Set Password";
+  const Icon = hasPassword ? Lock : KeyRound;
+
   return (
     <div className="card bg-base-100 shadow-xl border border-base-200">
       <div className="card-body">
         <div className="flex items-center gap-3 mb-2">
           <div className="p-2 bg-primary/10 rounded-lg">
-            <Lock className="w-5 h-5 text-primary" />
+            <Icon className="w-5 h-5 text-primary" />
           </div>
           <div>
-            <h2 className="text-xl font-bold">Change Password</h2>
-            <p className="text-sm text-base-content/60">
-              Update your password to keep your account secure.
-            </p>
+            <h2 className="text-xl font-bold">{title}</h2>
+            <p className="text-sm text-base-content/60">{description}</p>
           </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-          <div className="form-control w-full">
-            <label className="label">
-              <span className="label-text font-medium">Current Password</span>
-            </label>
-            <input
-              type="password"
-              className="input input-bordered w-full focus:outline-primary transition-all"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-              disabled={submitting}
-              required
-              autoComplete="current-password"
-              placeholder="Enter your current password"
-            />
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {hasPassword && (
             <div className="form-control w-full">
               <label className="label">
-                <span className="label-text font-medium">New Password</span>
+                <span className="label-text font-medium">Current Password</span>
+              </label>
+              <input
+                type="password"
+                className="input input-bordered w-full focus:outline-primary transition-all"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                disabled={submitting}
+                required
+                autoComplete="current-password"
+                placeholder="Enter your current password"
+              />
+            </div>
+          )}
+
+          <div className={`grid grid-cols-1 ${hasPassword ? "sm:grid-cols-2" : ""} gap-4`}>
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text font-medium">{hasPassword ? "New Password" : "Password"}</span>
               </label>
               <input
                 type="password"
@@ -90,7 +99,7 @@ export default function PasswordForm() {
 
             <div className="form-control w-full">
               <label className="label">
-                <span className="label-text font-medium">Confirm New Password</span>
+                <span className="label-text font-medium">Confirm {hasPassword ? "New " : ""}Password</span>
               </label>
               <input
                 type="password"
@@ -102,7 +111,7 @@ export default function PasswordForm() {
                 minLength={6}
                 maxLength={128}
                 autoComplete="new-password"
-                placeholder="Repeat new password"
+                placeholder="Repeat password"
               />
             </div>
           </div>
@@ -116,12 +125,12 @@ export default function PasswordForm() {
               {submitting ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  Updating...
+                  Saving...
                 </>
               ) : (
                 <>
-                  <Lock className="w-4 h-4" />
-                  Update Password
+                  <Icon className="w-4 h-4" />
+                  {buttonLabel}
                 </>
               )}
             </button>
