@@ -34,9 +34,15 @@ export function Topbar() {
         
         {user && (
           <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar placeholder">
-              <div className="bg-neutral text-neutral-content rounded-full w-10">
-                <span className="text-xl">{user.name ? user.name.charAt(0).toUpperCase() : "?"}</span>
+            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+              <div className="w-10 rounded-full bg-neutral text-neutral-content overflow-hidden">
+                {user.avatar ? (
+                  <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
+                ) : (
+                  <span className="text-xl flex items-center justify-center w-full h-full">
+                    {user.name ? user.name.charAt(0).toUpperCase() : "?"}
+                  </span>
+                )}
               </div>
             </div>
             <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
