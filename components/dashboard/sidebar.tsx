@@ -27,6 +27,7 @@ export function Sidebar() {
   ];
 
   const adminLinks = [
+    { href: "/dashboard/admin/analytics", label: "Analytics Overview" },
     { href: "/dashboard/admin/users", label: "Manage Users" },
     { href: "/dashboard/admin/manage-lawyers", label: "Manage Lawyers" },
     { href: "/dashboard/admin/transactions", label: "All Transactions" },
