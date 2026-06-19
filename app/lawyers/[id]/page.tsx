@@ -4,12 +4,15 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { api } from "@/lib/api";
 import { DetailsHeader } from "@/components/lawyer/details-header";
+import { CommentForm } from "@/components/lawyer/comment-form";
+import { CommentList } from "@/components/lawyer/comment-list";
 
 export default function LawyerDetailsPage() {
   const params = useParams();
   const [lawyer, setLawyer] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [refreshComments, setRefreshComments] = useState(0);
 
   useEffect(() => {
     async function fetchLawyer() {
@@ -60,10 +63,11 @@ export default function LawyerDetailsPage() {
             </div>
           </section>
 
-          <section className="bg-base-100 p-6 rounded-xl shadow-sm border border-base-200">
-            <h2 className="text-2xl font-bold mb-4">Comments & Reviews</h2>
-            <div className="py-8 text-center bg-base-200/50 rounded-lg border border-base-300 border-dashed">
-              <p className="text-base-content/60 italic">Comments will be available in a future update.</p>
+          <section id="reviews" className="scroll-mt-24">
+            <h2 className="text-2xl font-bold mb-6">Comments & Reviews</h2>
+            <CommentForm lawyerId={lawyer.id || lawyer._id} onCommentAdded={() => setRefreshComments(prev => prev + 1)} />
+            <div className="mt-8">
+              <CommentList lawyerId={lawyer.id || lawyer._id} refreshTrigger={refreshComments} />
             </div>
           </section>
         </div>
