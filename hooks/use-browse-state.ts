@@ -1,24 +1,25 @@
 "use client";
 
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 export function useBrowseState() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
-  const getParam = (key: string) => searchParams?.get(key) || "";
-
-  const state = {
-    q: getParam("q"),
-    specialization: getParam("specialization"),
-    minFee: getParam("minFee"),
-    maxFee: getParam("maxFee"),
-    available: getParam("available") === "true",
-    sort: getParam("sort") || "hired",
-    page: parseInt(getParam("page") || "1", 10),
-  };
+  const state = useMemo(() => {
+    const getParam = (key: string) => searchParams?.get(key) || "";
+    return {
+      q: getParam("q"),
+      specialization: getParam("specialization"),
+      minFee: getParam("minFee"),
+      maxFee: getParam("maxFee"),
+      available: getParam("available") === "true",
+      sort: getParam("sort") || "hired",
+      page: parseInt(getParam("page") || "1", 10),
+    };
+  }, [searchParams]);
 
   const setParams = useCallback(
     (updates: Partial<typeof state>) => {
