@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { Heart } from "lucide-react";
+import { useShortlist } from "@/context/ShortlistContext";
 
 export interface LawyerData {
   _id?: string;
@@ -15,8 +17,20 @@ export interface LawyerData {
 }
 
 export function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
+  const { isShortlisted, toggleShortlist } = useShortlist();
+  const lawyerId = lawyer._id || lawyer.id || "";
+
   return (
-    <article className="card bg-base-100 shadow-xl border border-base-200 flex flex-col h-full overflow-hidden transition-shadow hover:shadow-2xl">
+    <article className="card bg-base-100 shadow-xl border border-base-200 flex flex-col h-full overflow-hidden transition-shadow hover:shadow-2xl relative">
+      <button 
+        onClick={(e) => {
+          e.preventDefault();
+          toggleShortlist(lawyerId);
+        }}
+        className="btn btn-circle btn-ghost btn-sm absolute top-4 right-4 z-20 text-error hover:bg-error/10"
+      >
+        <Heart fill={isShortlisted(lawyerId) ? "currentColor" : "none"} size={20} />
+      </button>
       <div className="p-6 flex flex-col items-center flex-1">
         <div className="avatar mb-4 relative">
           <div className="w-24 h-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 overflow-hidden bg-base-200">

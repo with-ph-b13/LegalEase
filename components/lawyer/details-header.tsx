@@ -5,11 +5,15 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import type { LawyerData } from "@/components/browse/lawyer-card";
 import { HireModal } from "./hire-modal";
+import { Heart } from "lucide-react";
+import { useShortlist } from "@/context/ShortlistContext";
 
 export function DetailsHeader({ lawyer }: { lawyer: LawyerData }) {
   const { user } = useAuth();
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
+  const { isShortlisted, toggleShortlist } = useShortlist();
+  const lawyerId = lawyer._id || lawyer.id || "";
 
   // If user is logged in as lawyer and it's their own profile
   const isOwnProfile = user?.role === "lawyer" && lawyer.userId === user.id;
@@ -59,14 +63,24 @@ export function DetailsHeader({ lawyer }: { lawyer: LawyerData }) {
           <div className="text-2xl font-bold text-primary">
             ${lawyer.fee} <span className="text-sm text-base-content/60 font-normal">/ hr</span>
           </div>
-          {!isOwnProfile && (
-            <button 
-              className="btn btn-primary w-full sm:w-auto px-8"
-              onClick={handleHireClick}
-            >
-              {user ? "Hire Now" : "Sign in to hire"}
-            </button>
-          )}
+          <div className="flex gap-2 w-full">
+            {!isOwnProfile && (
+              <>
+                <button 
+                  className="btn btn-primary flex-1 sm:flex-none px-8"
+                  onClick={handleHireClick}
+                >
+                  {user ? "Hire Now" : "Sign in to hire"}
+                </button>
+                <button 
+                  onClick={() => toggleShortlist(lawyerId)}
+                  className="btn btn-outline btn-square text-error hover:bg-error/10 hover:border-error"
+                >
+                  <Heart fill={isShortlisted(lawyerId) ? "currentColor" : "none"} size={20} />
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </div>
 
