@@ -1,4 +1,5 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+// Use relative path to hit the Next.js rewrites proxy
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
 export class ApiError extends Error {
   constructor(public status: number, message: string) {
