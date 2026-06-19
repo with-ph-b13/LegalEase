@@ -19,7 +19,7 @@ export function LawyerProfileForm({ initialData, isEdit }: { initialData?: Profi
   const router = useRouter();
   const [formData, setFormData] = useState<Partial<ProfileData>>({
     name: initialData?.name || "",
-    specialization: initialData?.specialization || "Criminal Law",
+    specialization: initialData?.specialization || "Criminal",
     bio: initialData?.bio || "",
     fee: initialData?.fee || 100,
     imageUrl: initialData?.imageUrl || "",
@@ -61,68 +61,70 @@ export function LawyerProfileForm({ initialData, isEdit }: { initialData?: Profi
 
       <div className="form-control">
         <label className="label"><span className="label-text">Name</span></label>
-        <input 
-          type="text" 
-          required 
-          className="input input-bordered" 
-          value={formData.name} 
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })} 
+        <input
+          type="text"
+          required
+          className="input input-bordered"
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
         />
       </div>
 
       <div className="form-control">
         <label className="label"><span className="label-text">Specialization</span></label>
-        <select 
-          className="select select-bordered" 
-          value={formData.specialization} 
+        <select
+          className="select select-bordered"
+          value={formData.specialization}
           onChange={(e) => setFormData({ ...formData, specialization: e.target.value })}
         >
-          <option value="Criminal Law">Criminal Law</option>
-          <option value="Corporate Law">Corporate Law</option>
-          <option value="Family Law">Family Law</option>
-          <option value="Immigration Law">Immigration Law</option>
+          <option value="Criminal">Criminal</option>
+          <option value="Corporate">Corporate</option>
+          <option value="Family">Family</option>
+          <option value="Tax">Tax</option>
+          <option value="Immigration">Immigration</option>
+          <option value="Real Estate">Real Estate</option>
           <option value="Intellectual Property">Intellectual Property</option>
-          <option value="Real Estate Law">Real Estate Law</option>
+          <option value="Labor">Labor</option>
         </select>
       </div>
 
       <div className="form-control">
         <label className="label"><span className="label-text">Bio</span></label>
-        <textarea 
-          className="textarea textarea-bordered h-24" 
+        <textarea
+          className="textarea textarea-bordered h-24"
           required
-          value={formData.bio} 
-          onChange={(e) => setFormData({ ...formData, bio: e.target.value })} 
+          value={formData.bio}
+          onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
         />
       </div>
 
       <div className="form-control">
         <label className="label"><span className="label-text">Hourly Fee ($)</span></label>
-        <input 
-          type="number" 
-          required 
+        <input
+          type="number"
+          required
           min="1"
-          className="input input-bordered" 
-          value={formData.fee} 
-          onChange={(e) => setFormData({ ...formData, fee: Number(e.target.value) })} 
+          className="input input-bordered"
+          value={formData.fee}
+          onChange={(e) => setFormData({ ...formData, fee: Number(e.target.value) })}
         />
       </div>
 
       <div className="form-control">
         <label className="label"><span className="label-text">Profile Image</span></label>
-        <input 
-          type="file" 
+        <input
+          type="file"
           accept="image/*"
-          className="file-input file-input-bordered" 
-          onChange={handleImageChange} 
+          className="file-input file-input-bordered"
+          onChange={handleImageChange}
         />
         {uploading && <div className="mt-2 text-sm text-info">Uploading image...</div>}
         {formData.imageUrl && !uploading && (
           <div className="mt-4 avatar">
             <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 bg-base-200">
-              <img 
-                src={formData.imageUrl} 
-                alt="Profile" 
+              <img
+                src={formData.imageUrl}
+                alt="Profile"
                 onError={(e) => {
                   e.currentTarget.src = "/male-placeholder.svg";
                   e.currentTarget.onerror = null;
