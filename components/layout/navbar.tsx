@@ -5,10 +5,13 @@ import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { SearchBar } from "./search-bar";
 import { MobileMenu } from "./mobile-menu";
+import { useTheme } from "@/context/ThemeContext";
+import { Sun, Moon } from "lucide-react";
 
 export function Navbar() {
   const pathname = usePathname();
   const { user, loading } = useAuth();
+  const { theme, toggleTheme } = useTheme();
 
   // Hide public navbar on dashboard
   if (pathname?.startsWith("/dashboard")) {
@@ -46,6 +49,14 @@ export function Navbar() {
       <div className="navbar-end gap-4">
         <SearchBar />
         
+        <button 
+          onClick={toggleTheme} 
+          className="btn btn-ghost btn-circle btn-sm"
+          aria-label="Toggle theme"
+        >
+          {theme === "legalease" ? <Moon size={20} /> : <Sun size={20} />}
+        </button>
+
         <div className="hidden md:flex items-center gap-2">
           {!loading && user ? (
             <Link href="/dashboard" className="btn btn-primary btn-sm">

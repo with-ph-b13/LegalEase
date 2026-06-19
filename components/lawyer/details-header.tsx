@@ -12,7 +12,7 @@ export function DetailsHeader({ lawyer }: { lawyer: LawyerData }) {
   const { user } = useAuth();
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
-  const { isShortlisted, toggleShortlist } = useShortlist();
+  const { isShortlisted, toggleShortlist, isHired } = useShortlist();
   const lawyerId = lawyer._id || lawyer.id || "";
 
   // If user is logged in as lawyer and it's their own profile
@@ -55,7 +55,12 @@ export function DetailsHeader({ lawyer }: { lawyer: LawyerData }) {
         </div>
 
         <div className="flex-1 pb-2">
-          <h1 className="text-3xl font-bold text-base-content mb-1">{lawyer.name}</h1>
+          <h1 className="text-3xl font-bold text-base-content mb-1 flex items-center gap-3">
+            {lawyer.name}
+            {isHired(lawyerId) && (
+              <span className="badge badge-success text-white font-bold badge-sm">Hired</span>
+            )}
+          </h1>
           <p className="text-lg text-base-content/70">{lawyer.specialization}</p>
         </div>
 

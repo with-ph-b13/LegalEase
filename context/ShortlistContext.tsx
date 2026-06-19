@@ -9,6 +9,8 @@ interface ShortlistContextType {
   isShortlisted: (lawyerId: string) => boolean;
   toggleShortlist: (lawyerId: string) => Promise<void>;
   loading: boolean;
+  hiredLawyers: string[];
+  isHired: (lawyerId: string) => boolean;
 }
 
 const ShortlistContext = createContext<ShortlistContextType | undefined>(undefined);
@@ -16,19 +18,24 @@ const ShortlistContext = createContext<ShortlistContextType | undefined>(undefin
 export function ShortlistProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   const [shortlist, setShortlist] = useState<string[]>([]);
+  const [hiredLawyers, setHiredLawyers] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Load initial shortlist
+  // Load initial shortlist & hired list
   useEffect(() => {
-    async function loadShortlist() {
+    async function loadData() {
       setLoading(true);
       if (user) {
         try {
           // Logged in: fetch from DB
-          const res = await api.get<any[]>("/api/shortlist/me");
-          setShortlist(res.map((l: any) => l._id || l.id));
+          const [shortlistRes, hiresRes] = await Promise.all([
+            api.get<any[]>("/api/shortlist/me"),
+            api.get<any[]>("/api/hirings/me")
+          ]);
+          setShortlist(shortlistRes.map((l: any) => l._id || l.id));
+          setHiredLawyers(hiresRes.map((h: any) => h.lawyerId));
         } catch (err) {
-          console.error("Failed to load shortlist from server", err);
+          console.error("Failed to load shortlist or hires from server", err);
         }
       } else {
         // Guest: load from localStorage
@@ -42,10 +49,11 @@ export function ShortlistProvider({ children }: { children: React.ReactNode }) {
         } else {
           setShortlist([]);
         }
+        setHiredLawyers([]);
       }
       setLoading(false);
     }
-    loadShortlist();
+    loadData();
   }, [user]);
 
   // Sync guest shortlist to backend upon login
@@ -74,6 +82,10 @@ export function ShortlistProvider({ children }: { children: React.ReactNode }) {
 
   const isShortlisted = (lawyerId: string) => {
     return shortlist.includes(lawyerId);
+  };
+
+  const isHired = (lawyerId: string) => {
+    return hiredLawyers.includes(lawyerId);
   };
 
   const toggleShortlist = async (lawyerId: string) => {
@@ -108,7 +120,7 @@ export function ShortlistProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <ShortlistContext.Provider value={{ shortlist, isShortlisted, toggleShortlist, loading }}>
+    <ShortlistContext.Provider value={{ shortlist, isShortlisted, toggleShortlist, loading, hiredLawyers, isHired }}>
       {children}
     </ShortlistContext.Provider>
   );

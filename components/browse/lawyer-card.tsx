@@ -17,7 +17,7 @@ export interface LawyerData {
 }
 
 export function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
-  const { isShortlisted, toggleShortlist } = useShortlist();
+  const { isShortlisted, toggleShortlist, isHired } = useShortlist();
   const lawyerId = lawyer._id || lawyer.id || "";
 
   return (
@@ -33,6 +33,11 @@ export function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
       </button>
       <div className="p-6 flex flex-col items-center flex-1">
         <div className="avatar mb-4 relative">
+          {isHired(lawyerId) && (
+            <span className="badge badge-success absolute -top-2 -left-4 z-10 font-bold shadow-sm text-white">
+              Hired
+            </span>
+          )}
           <div className="w-24 h-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 overflow-hidden bg-base-200">
             {lawyer.imageUrl ? (
               <img 
