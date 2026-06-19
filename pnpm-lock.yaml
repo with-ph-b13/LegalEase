@@ -8,18 +8,45 @@ importers:
 
   .:
     dependencies:
+      bcryptjs:
+        specifier: ^3.0.3
+        version: 3.0.3
+      cors:
+        specifier: ^2
+        version: 2.8.6
       date-fns:
         specifier: ^4.4.0
         version: 4.4.0
+      dotenv:
+        specifier: ^16
+        version: 16.6.1
+      express:
+        specifier: ^5
+        version: 5.2.1
+      express-rate-limit:
+        specifier: ^8.5.2
+        version: 8.5.2(express@5.2.1)
       framer-motion:
         specifier: ^12.40.0
         version: 12.40.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      jsonwebtoken:
+        specifier: ^9.0.3
+        version: 9.0.3
       lucide-react:
         specifier: ^1.20.0
         version: 1.20.0(react@19.2.4)
+      mongoose:
+        specifier: ^8
+        version: 8.24.0
       next:
         specifier: 16.2.9
         version: 16.2.9(@babel/core@7.29.7)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      passport:
+        specifier: ^0.7.0
+        version: 0.7.0
+      passport-google-oauth20:
+        specifier: ^2.0.0
+        version: 2.0.0
       react:
         specifier: 19.2.4
         version: 19.2.4
@@ -29,6 +56,12 @@ importers:
       recharts:
         specifier: ^3.8.1
         version: 3.8.1(@types/react@19.2.17)(react-dom@19.2.4(react@19.2.4))(react-is@16.13.1)(react@19.2.4)(redux@5.0.1)
+      stripe:
+        specifier: ^22.2.1
+        version: 22.2.1(@types/node@20.19.43)
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4
@@ -5487,6 +5520,10 @@ snapshots:
   strip-bom@3.0.0: {}
 
   strip-json-comments@3.1.1: {}
+
+  stripe@22.2.1(@types/node@20.19.43):
+    optionalDependencies:
+      '@types/node': 20.19.43
 
   stripe@22.2.1(@types/node@22.19.21):
     optionalDependencies:
