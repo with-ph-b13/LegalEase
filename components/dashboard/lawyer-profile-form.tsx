@@ -119,8 +119,15 @@ export function LawyerProfileForm({ initialData, isEdit }: { initialData?: Profi
         {uploading && <div className="mt-2 text-sm text-info">Uploading image...</div>}
         {formData.imageUrl && !uploading && (
           <div className="mt-4 avatar">
-            <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-              <img src={formData.imageUrl} alt="Profile" />
+            <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 bg-base-200">
+              <img 
+                src={formData.imageUrl} 
+                alt="Profile" 
+                onError={(e) => {
+                  e.currentTarget.src = "/male-placeholder.svg";
+                  e.currentTarget.onerror = null;
+                }}
+              />
             </div>
           </div>
         )}

@@ -98,10 +98,23 @@ export default function ManageLegalProfilePage() {
               <tr>
                 <td>
                   <div className="flex items-center gap-3">
-                    {profile.imageUrl && (
+                    {profile.imageUrl ? (
                       <div className="avatar">
                         <div className="mask mask-squircle w-12 h-12">
-                          <img src={profile.imageUrl} alt="Profile avatar" />
+                          <img 
+                            src={profile.imageUrl} 
+                            alt="Profile avatar" 
+                            onError={(e) => {
+                              e.currentTarget.src = "/male-placeholder.svg";
+                              e.currentTarget.onerror = null;
+                            }}
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="avatar">
+                        <div className="mask mask-squircle w-12 h-12">
+                          <img src="/male-placeholder.svg" alt="Placeholder" />
                         </div>
                       </div>
                     )}

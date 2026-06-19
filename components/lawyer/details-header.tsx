@@ -16,11 +16,13 @@ export function DetailsHeader({ lawyer }: { lawyer: LawyerData }) {
                 src={lawyer.imageUrl} 
                 alt={lawyer.name}
                 className="object-cover w-full h-full"
+                onError={(e) => {
+                  e.currentTarget.src = "/male-placeholder.svg";
+                  e.currentTarget.onerror = null;
+                }}
               />
             ) : (
-              <div className="flex items-center justify-center w-full h-full text-4xl font-bold text-neutral-content">
-                {lawyer.name.charAt(0).toUpperCase()}
-              </div>
+              <img src="/male-placeholder.svg" alt="Placeholder" className="object-cover w-full h-full opacity-50" />
             )}
           </div>
           {lawyer.status === "busy" && (
