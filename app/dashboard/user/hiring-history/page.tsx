@@ -111,8 +111,8 @@ export default function HiringHistoryPage() {
                         >
                           Pay Now
                         </button>
-                      ) : hiring.status === "paid" ? (
-                        <span className="text-success font-medium text-sm">Paid ✓</span>
+                      ) : hiring.status === "paid" || hiring.status === "completed" ? (
+                        <button className="btn btn-disabled btn-sm" disabled>Paid</button>
                       ) : (
                         <span className="text-base-content/50 italic text-sm">Waiting...</span>
                       )}

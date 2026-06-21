@@ -22,9 +22,13 @@ export default function LoginForm() {
     setError("");
     setSubmitting(true);
     try {
-      await login(email, password);
+      const u = await login(email, password);
       toast.success("Signed in");
-      router.push("/dashboard");
+      if (u.role === "user") {
+        router.push("/");
+      } else {
+        router.push("/dashboard");
+      }
     } catch (err) {
       const message = err instanceof Error ? err.message : "Something went wrong";
       setError(message);

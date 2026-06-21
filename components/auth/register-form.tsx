@@ -39,7 +39,11 @@ export default function RegisterForm() {
     try {
       const u = await register({ name, email, password, role });
       toast.success(`Welcome, ${u.name}`);
-      router.push("/dashboard");
+      if (u.role === "user") {
+        router.push("/");
+      } else {
+        router.push("/dashboard");
+      }
     } catch (err) {
       const message = err instanceof Error ? err.message : "Something went wrong";
       setError(message);

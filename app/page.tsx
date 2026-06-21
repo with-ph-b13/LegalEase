@@ -14,17 +14,8 @@ export default function HomePage() {
   const { token, loading } = useAuth();
   const router = useRouter();
 
-  // Redirect to dashboard if already logged in
-  useEffect(() => {
-    if (!loading && token) {
-      router.replace("/dashboard");
-    }
-  }, [token, loading, router]);
-
-  // Don't flash public homepage if checking auth or about to redirect
-  if (loading || token) {
-    return <div className="h-screen bg-base-100" />;
-  }
+  // Let everyone see the homepage, even logged in users.
+  // The navbar will naturally show Dashboard / Sign Out when authenticated.
 
   return (
     <div className="min-h-screen flex flex-col">

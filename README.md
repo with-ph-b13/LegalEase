@@ -34,6 +34,24 @@ LegalEase is a premium, modern legal consultation marketplace connecting clients
 - **Backend:** Node.js, Express, MongoDB (Mongoose), Passport.js (Google OAuth), JWT, Stripe SDK, Zod, express-rate-limit
 - **State Management:** React Context (Auth, Theme, Shortlist)
 
+### NPM Packages Used
+**Frontend:**
+- `next` - React framework
+- `framer-motion` - Animations
+- `lucide-react` - Icons
+- `recharts` - Analytics charts
+- `date-fns` - Date formatting
+- `daisyui`, `tailwindcss` - Styling
+
+**Backend:**
+- `express` - Web framework
+- `mongoose` - MongoDB object modeling
+- `jsonwebtoken`, `bcryptjs` - Authentication & Security
+- `stripe` - Payment processing
+- `zod` - Schema validation
+- `cors`, `dotenv` - Configuration
+- `express-rate-limit` - Rate limiting
+
 ---
 
 ## 📦 Project Setup
