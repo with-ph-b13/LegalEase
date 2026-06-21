@@ -17,22 +17,22 @@ export function Sidebar() {
     { href: "/dashboard/user/transactions", label: "Transactions" },
     { href: "/dashboard/user/comments", label: "Comments" },
     { href: "/dashboard/user/shortlist", label: "Shortlist" },
-    { href: "/dashboard/profile", label: "Update Profile" },
+    { href: "/dashboard/user/update-profile", label: "Update Profile" },
   ];
 
   const lawyerLinks = [
     { href: "/dashboard/lawyer/manage-legal-profile", label: "Manage legal profile" },
     { href: "/dashboard/lawyer/hiring-history", label: "Hiring history" },
     { href: "/dashboard/lawyer/transactions", label: "Transactions" },
-    { href: "/dashboard/profile", label: "Update Profile" },
+    { href: "/dashboard/user/update-profile", label: "Update Profile" },
   ];
 
   const adminLinks = [
     { href: "/dashboard/admin/analytics", label: "Analytics Overview" },
-    { href: "/dashboard/admin/users", label: "Manage Users" },
+    { href: "/dashboard/admin/manage-users", label: "Manage Users" },
     { href: "/dashboard/admin/manage-lawyers", label: "Manage Lawyers" },
-    { href: "/dashboard/admin/transactions", label: "All Transactions" },
-    { href: "/dashboard/profile", label: "Update Profile" },
+    { href: "/dashboard/admin/all-transactions", label: "All Transactions" },
+    { href: "/dashboard/user/update-profile", label: "Update Profile" },
   ];
 
   let links: { href: string; label: string }[] = [];

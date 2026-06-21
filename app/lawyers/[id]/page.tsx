@@ -90,6 +90,12 @@ export default function LawyerDetailsPage() {
                   {lawyer.status}
                 </span>
               </li>
+              <li className="flex justify-between">
+                <span className="text-base-content/60">Date Joined</span>
+                <span className="font-medium">
+                  {lawyer.createdAt ? new Date(lawyer.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : "N/A"}
+                </span>
+              </li>
             </ul>
           </section>
         </div>

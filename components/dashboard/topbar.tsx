@@ -50,7 +50,7 @@ export function Topbar() {
                 {user.name || "User"} <span className="text-xs font-normal block opacity-70">{user.role}</span>
               </li>
               <li>
-                <Link href="/dashboard/profile" className="flex items-center gap-2">
+                <Link href="/dashboard/user/update-profile" className="flex items-center gap-2">
                   <User className="w-4 h-4" />
                   Edit Profile
                 </Link>
