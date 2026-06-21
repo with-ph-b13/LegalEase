@@ -44,13 +44,13 @@ export function Footer() {
           <div>
             <h4 className="font-bold text-white mb-4 uppercase tracking-wider text-sm">Newsletter</h4>
             <p className="opacity-80 mb-4 text-sm">Stay updated with our latest news and legal insights.</p>
-            <form className="flex gap-2" onSubmit={(e) => e.preventDefault()}>
+            <form className="join w-full" onSubmit={(e) => e.preventDefault()}>
               <input 
                 type="email" 
                 placeholder="email@example.com" 
-                className="input input-bordered input-sm w-full bg-neutral-focus text-white border-neutral" 
+                className="input input-bordered join-item w-full text-base-content" 
               />
-              <button type="button" className="btn btn-primary btn-sm">Subscribe</button>
+              <button type="button" className="btn btn-primary join-item">Subscribe</button>
             </form>
           </div>
 
