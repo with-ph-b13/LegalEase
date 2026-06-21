@@ -6,6 +6,7 @@ import { api } from "@/lib/api";
 import { DetailsHeader } from "@/components/lawyer/details-header";
 import { CommentForm } from "@/components/lawyer/comment-form";
 import { CommentList } from "@/components/lawyer/comment-list";
+import { formatSpecialization } from "@/lib/format";
 
 export default function LawyerDetailsPage() {
   const params = useParams() as { id: string };
@@ -78,7 +79,7 @@ export default function LawyerDetailsPage() {
             <ul className="space-y-4 text-sm">
               <li className="flex justify-between">
                 <span className="text-base-content/60">Specialization</span>
-                <span className="font-medium">{lawyer.specialization}</span>
+                <span className="font-medium">{lawyer.specialization ? formatSpecialization(lawyer.specialization) : ""}</span>
               </li>
               <li className="flex justify-between">
                 <span className="text-base-content/60">Hourly Rate</span>

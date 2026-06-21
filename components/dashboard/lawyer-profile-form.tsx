@@ -77,14 +77,14 @@ export function LawyerProfileForm({ initialData, isEdit }: { initialData?: Profi
           value={formData.specialization}
           onChange={(e) => setFormData({ ...formData, specialization: e.target.value })}
         >
-          <option value="Criminal">Criminal</option>
-          <option value="Corporate">Corporate</option>
-          <option value="Family">Family</option>
-          <option value="Tax">Tax</option>
-          <option value="Immigration">Immigration</option>
-          <option value="Real Estate">Real Estate</option>
+          <option value="Criminal">Criminal Defense</option>
+          <option value="Corporate">Corporate Law</option>
+          <option value="Family">Family Law</option>
+          <option value="Tax">Tax Law</option>
+          <option value="Immigration">Immigration Law</option>
+          <option value="Real Estate">Real Estate Law</option>
           <option value="Intellectual Property">Intellectual Property</option>
-          <option value="Labor">Labor</option>
+          <option value="Labor">Labor Law</option>
         </select>
       </div>
 

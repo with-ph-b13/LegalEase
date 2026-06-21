@@ -7,6 +7,7 @@ import type { LawyerData } from "@/components/browse/lawyer-card";
 import { HireModal } from "./hire-modal";
 import { Heart } from "lucide-react";
 import { useShortlist } from "@/context/ShortlistContext";
+import { formatSpecialization } from "@/lib/format";
 
 export function DetailsHeader({ lawyer }: { lawyer: LawyerData }) {
   const { user } = useAuth();
@@ -61,7 +62,7 @@ export function DetailsHeader({ lawyer }: { lawyer: LawyerData }) {
               <span className="badge badge-success text-white font-bold badge-sm">Hired</span>
             )}
           </h1>
-          <p className="text-lg text-base-content/70">{lawyer.specialization}</p>
+          <p className="text-lg text-base-content/70">{formatSpecialization(lawyer.specialization)}</p>
         </div>
 
         <div className="pb-2 flex flex-col sm:items-end gap-3">

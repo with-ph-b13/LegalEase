@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import Link from "next/link";
 import { format } from "date-fns";
+import { formatSpecialization } from "@/lib/format";
 
 export default function HiringHistoryPage() {
   const [hirings, setHirings] = useState<any[]>([]);
@@ -80,7 +81,7 @@ export default function HiringHistoryPage() {
                           <Link href={`/lawyers/${hiring.lawyer?._id || hiring.lawyer?.id}`} className="font-bold hover:underline hover:text-primary transition-colors">
                             {hiring.lawyer?.name || "Unknown"}
                           </Link>
-                          <div className="text-sm opacity-60">{hiring.lawyer?.specialization || "Lawyer"}</div>
+                          <div className="mt-1"><span className="badge badge-outline badge-primary badge-sm font-medium">{hiring.lawyer?.specialization ? formatSpecialization(hiring.lawyer.specialization) : "Lawyer"}</span></div>
                         </div>
                       </div>
                     </td>

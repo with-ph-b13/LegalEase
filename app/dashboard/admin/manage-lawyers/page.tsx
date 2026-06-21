@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { ConfirmDeleteModal } from "@/components/admin/confirm-delete";
 import { format } from "date-fns";
+import { formatSpecialization } from "@/lib/format";
 import Link from "next/link";
 
 export default function ManageLawyersPage() {
@@ -110,7 +111,7 @@ export default function ManageLawyersPage() {
                       <span className="text-error italic text-sm">Orphaned</span>
                     )}
                   </td>
-                  <td>{lawyer.specialization}</td>
+                  <td><span className="badge badge-outline badge-primary font-medium">{formatSpecialization(lawyer.specialization)}</span></td>
                   <td>${lawyer.fee}</td>
                   <td>
                     <button 

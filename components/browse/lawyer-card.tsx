@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Heart } from "lucide-react";
 import { useShortlist } from "@/context/ShortlistContext";
+import { formatSpecialization } from "@/lib/format";
 
 export interface LawyerData {
   _id?: string;
@@ -61,7 +62,7 @@ export function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
           )}
         </div>
         <h2 className="card-title text-center leading-tight mb-1">{lawyer.name}</h2>
-        <p className="text-sm text-base-content/70 mb-4">{lawyer.specialization}</p>
+        <p className="text-sm text-base-content/70 mb-4">{formatSpecialization(lawyer.specialization)}</p>
         <div className="mt-auto w-full flex justify-between items-center bg-base-200/50 p-3 rounded-lg">
           <div className="text-sm">
             <span className="font-bold">${lawyer.fee}</span> / hr

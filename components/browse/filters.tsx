@@ -28,13 +28,15 @@ export function Filters() {
   }, [minFeeValue, maxFeeValue, state.minFee, state.maxFee, setParams]);
 
   const specializations = [
-    "All",
-    "Criminal Law",
-    "Corporate Law",
-    "Family Law",
-    "Immigration Law",
-    "Intellectual Property",
-    "Real Estate Law"
+    { value: "All", label: "All Specializations" },
+    { value: "Criminal", label: "Criminal Defense" },
+    { value: "Corporate", label: "Corporate Law" },
+    { value: "Family", label: "Family Law" },
+    { value: "Tax", label: "Tax Law" },
+    { value: "Immigration", label: "Immigration Law" },
+    { value: "Real Estate", label: "Real Estate Law" },
+    { value: "Intellectual Property", label: "Intellectual Property" },
+    { value: "Labor", label: "Labor Law" },
   ];
 
   return (
@@ -57,7 +59,7 @@ export function Filters() {
           value={state.specialization || "All"}
           onChange={(e) => setParams({ specialization: e.target.value === "All" ? "" : e.target.value })}
         >
-          {specializations.map(s => <option key={s} value={s}>{s}</option>)}
+          {specializations.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
         </select>
       </div>
 

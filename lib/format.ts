@@ -38,3 +38,16 @@ export function formatRelative(input: string | Date): string {
   if (diff < 31536000) return rtf.format(-Math.floor(diff / 2592000), "month");
   return rtf.format(-Math.floor(diff / 31536000), "year");
 }
+
+export function formatSpecialization(spec: string): string {
+  const map: Record<string, string> = {
+    Criminal: "Criminal Defense",
+    Corporate: "Corporate Law",
+    Family: "Family Law",
+    Tax: "Tax Law",
+    Immigration: "Immigration Law",
+    "Real Estate": "Real Estate Law",
+    Labor: "Labor Law",
+  };
+  return map[spec] || spec;
+}

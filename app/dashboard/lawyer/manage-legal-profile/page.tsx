@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { formatSpecialization } from "@/lib/format";
 
 export default function ManageLegalProfilePage() {
   const [profile, setProfile] = useState<any>(null);
@@ -124,7 +125,7 @@ export default function ManageLegalProfilePage() {
                     </div>
                   </div>
                 </td>
-                <td>{profile.specialization}</td>
+                <td><span className="badge badge-outline badge-primary font-medium">{formatSpecialization(profile.specialization)}</span></td>
                 <td>${profile.fee}</td>
                 <td>
                   <div className={`badge ${profile.status === 'available' ? 'badge-success' : 'badge-warning'} gap-2`}>
