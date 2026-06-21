@@ -44,10 +44,8 @@ export default function ProfileForm() {
           />
 
           <div className="space-y-4">
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text font-medium">Full Name</span>
-              </label>
+            <fieldset className="fieldset w-full">
+              <legend className="fieldset-legend font-medium text-base mb-2">Full Name</legend>
               <input
                 type="text"
                 placeholder="John Doe"
@@ -59,12 +57,10 @@ export default function ProfileForm() {
                 minLength={2}
                 maxLength={80}
               />
-            </div>
+            </fieldset>
 
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text font-medium">Email Address</span>
-              </label>
+            <fieldset className="fieldset w-full">
+              <legend className="fieldset-legend font-medium text-base mb-2">Email Address</legend>
               <div className="relative">
                 <Mail className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-base-content/40" />
                 <input
@@ -77,12 +73,10 @@ export default function ProfileForm() {
                   autoComplete="email"
                 />
               </div>
-            </div>
+            </fieldset>
 
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text font-medium">Account Role</span>
-              </label>
+            <fieldset className="fieldset w-full">
+              <legend className="fieldset-legend font-medium text-base mb-2">Account Role</legend>
               <input
                 type="text"
                 className="input input-bordered w-full bg-base-200 opacity-60 cursor-not-allowed capitalize"
@@ -90,7 +84,7 @@ export default function ProfileForm() {
                 disabled
                 readOnly
               />
-            </div>
+            </fieldset>
           </div>
 
           <div className="pt-4 flex justify-end">

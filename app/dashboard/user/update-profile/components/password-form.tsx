@@ -61,10 +61,8 @@ export default function PasswordForm({ hasPassword }: { hasPassword: boolean }) 
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
           {hasPassword && (
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text font-medium">Current Password</span>
-              </label>
+            <fieldset className="fieldset w-full">
+              <legend className="fieldset-legend font-medium text-base mb-2">Current Password</legend>
               <input
                 type="password"
                 className="input input-bordered w-full focus:outline-primary transition-all"
@@ -75,14 +73,12 @@ export default function PasswordForm({ hasPassword }: { hasPassword: boolean }) 
                 autoComplete="current-password"
                 placeholder="Enter your current password"
               />
-            </div>
+            </fieldset>
           )}
 
           <div className={`grid grid-cols-1 ${hasPassword ? "sm:grid-cols-2" : ""} gap-4`}>
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text font-medium">{hasPassword ? "New Password" : "Password"}</span>
-              </label>
+            <fieldset className="fieldset w-full">
+              <legend className="fieldset-legend font-medium text-base mb-2">{hasPassword ? "New Password" : "Password"}</legend>
               <input
                 type="password"
                 className="input input-bordered w-full focus:outline-primary transition-all"
@@ -95,12 +91,10 @@ export default function PasswordForm({ hasPassword }: { hasPassword: boolean }) 
                 autoComplete="new-password"
                 placeholder="At least 6 characters"
               />
-            </div>
+            </fieldset>
 
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text font-medium">Confirm {hasPassword ? "New " : ""}Password</span>
-              </label>
+            <fieldset className="fieldset w-full">
+              <legend className="fieldset-legend font-medium text-base mb-2">Confirm {hasPassword ? "New " : ""}Password</legend>
               <input
                 type="password"
                 className="input input-bordered w-full focus:outline-primary transition-all"
@@ -113,7 +107,7 @@ export default function PasswordForm({ hasPassword }: { hasPassword: boolean }) 
                 autoComplete="new-password"
                 placeholder="Repeat password"
               />
-            </div>
+            </fieldset>
           </div>
 
           <div className="pt-2 flex justify-end">

@@ -53,8 +53,8 @@ export function CommentForm({ lawyerId, onCommentAdded }: { lawyerId: string, on
       )}
 
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-2">Rating</label>
+        <fieldset className="fieldset mb-4">
+          <legend className="fieldset-legend text-sm font-medium mb-2">Rating</legend>
           <div className="flex gap-1">
             {[1, 2, 3, 4, 5].map((star) => (
               <button
@@ -75,10 +75,10 @@ export function CommentForm({ lawyerId, onCommentAdded }: { lawyerId: string, on
               </button>
             ))}
           </div>
-        </div>
+        </fieldset>
 
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-2">Your Experience</label>
+        <fieldset className="fieldset mb-4">
+          <legend className="fieldset-legend text-sm font-medium mb-2">Your Experience</legend>
           <textarea
             className="textarea textarea-bordered w-full h-24"
             placeholder="Share details of your experience with this lawyer..."
@@ -87,7 +87,7 @@ export function CommentForm({ lawyerId, onCommentAdded }: { lawyerId: string, on
             required
             disabled={loading}
           />
-        </div>
+        </fieldset>
 
         <div className="flex justify-end">
           <button 

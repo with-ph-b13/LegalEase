@@ -41,8 +41,8 @@ export function Filters() {
 
   return (
     <div className="bg-base-100 p-6 rounded-xl shadow-sm border border-base-200 space-y-6">
-      <div className="form-control">
-        <label className="label"><span className="label-text font-bold">Search</span></label>
+      <fieldset className="fieldset">
+        <legend className="fieldset-legend font-bold text-base mb-1">Search</legend>
         <input 
           type="text" 
           placeholder="Name or keyword..." 
@@ -50,10 +50,10 @@ export function Filters() {
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />
-      </div>
+      </fieldset>
 
-      <div className="form-control">
-        <label className="label"><span className="label-text font-bold">Specialization</span></label>
+      <fieldset className="fieldset">
+        <legend className="fieldset-legend font-bold text-base mb-1">Specialization</legend>
         <select 
           className="select select-bordered w-full"
           value={state.specialization || "All"}
@@ -61,10 +61,10 @@ export function Filters() {
         >
           {specializations.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
         </select>
-      </div>
+      </fieldset>
 
-      <div className="form-control">
-        <label className="label"><span className="label-text font-bold">Fee Range ($/hr)</span></label>
+      <fieldset className="fieldset">
+        <legend className="fieldset-legend font-bold text-base mb-1">Fee Range ($/hr)</legend>
         <div className="flex gap-2 items-center">
           <input 
             type="number" 
@@ -82,7 +82,7 @@ export function Filters() {
             onChange={(e) => setMaxFeeValue(e.target.value)}
           />
         </div>
-      </div>
+      </fieldset>
 
       <div className="form-control">
         <label className="label cursor-pointer justify-start gap-4">
@@ -96,8 +96,8 @@ export function Filters() {
         </label>
       </div>
 
-      <div className="form-control">
-        <label className="label"><span className="label-text font-bold">Sort By</span></label>
+      <fieldset className="fieldset">
+        <legend className="fieldset-legend font-bold text-base mb-1">Sort By</legend>
         <select 
           className="select select-bordered w-full"
           value={state.sort}
@@ -109,7 +109,7 @@ export function Filters() {
           <option value="fee_asc">Fee low→high</option>
           <option value="fee_desc">Fee high→low</option>
         </select>
-      </div>
+      </fieldset>
     </div>
   );
 }

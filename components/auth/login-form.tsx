@@ -42,10 +42,8 @@ export default function LoginForm() {
         </div>
       )}
 
-      <div className="form-control w-full">
-        <label className="label py-1" htmlFor="email">
-          <span className="label-text font-medium">Email</span>
-        </label>
+      <fieldset className="fieldset w-full">
+        <legend className="fieldset-legend font-medium">Email</legend>
         <div className="relative">
           <Mail className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-base-content/40 pointer-events-none" />
           <input
@@ -59,12 +57,10 @@ export default function LoginForm() {
             autoComplete="email"
           />
         </div>
-      </div>
+      </fieldset>
 
-      <div className="form-control w-full">
-        <label className="label py-1" htmlFor="password">
-          <span className="label-text font-medium">Password</span>
-        </label>
+      <fieldset className="fieldset w-full">
+        <legend className="fieldset-legend font-medium">Password</legend>
         <div className="relative">
           <Lock className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-base-content/40 pointer-events-none z-10" />
           <PasswordInput
@@ -77,7 +73,7 @@ export default function LoginForm() {
             autoComplete="current-password"
           />
         </div>
-      </div>
+      </fieldset>
 
       <button
         className="btn btn-primary w-full shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all"
