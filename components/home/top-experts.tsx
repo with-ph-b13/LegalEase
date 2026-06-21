@@ -30,8 +30,8 @@ export function TopExperts() {
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
           <div>
-            <h2 className="text-3xl font-bold mb-2">Top Hired Experts</h2>
-            <p className="text-base-content/70">The most trusted and experienced lawyers on our platform.</p>
+            <h2 className="text-3xl font-bold mb-2">Top Rated Counsel</h2>
+            <p className="text-base-content/70">Our most highly sought-after attorneys, distinguished by exceptional success rates and client trust.</p>
           </div>
         </div>
 

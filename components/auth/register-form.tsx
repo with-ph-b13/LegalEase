@@ -139,8 +139,8 @@ export default function RegisterForm() {
         <span className="label-text font-medium mb-2">I want to</span>
         <div className="grid grid-cols-2 gap-2">
           {[
-            { value: "user" as const, label: "Hire a lawyer", icon: Search },
-            { value: "lawyer" as const, label: "Offer services", icon: Briefcase },
+            { value: "user" as const, label: "Hire Legal Counsel", icon: Search },
+            { value: "lawyer" as const, label: "Offer Legal Services", icon: Briefcase },
           ].map(({ value, label, icon: Icon }) => (
             <button
               type="button"

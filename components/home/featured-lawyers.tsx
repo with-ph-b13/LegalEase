@@ -29,9 +29,9 @@ export function FeaturedLawyers() {
     <section className="py-20 bg-base-200/50">
       <div className="container mx-auto px-4 md:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Featured Experts</h2>
+          <h2 className="text-3xl font-bold mb-4">Featured Legal Experts</h2>
           <p className="text-base-content/70 max-w-2xl mx-auto">
-            Discover some of our highest-rated legal professionals across various specializations.
+            Discover elite legal professionals with a proven track record of excellence across diverse specializations.
           </p>
         </div>
 

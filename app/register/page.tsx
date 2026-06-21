@@ -8,8 +8,8 @@ export default function RegisterPage() {
   useRedirectIfAuthed();
   return (
     <AuthShell
-      title="Create your account"
-      subtitle="Join LegalEase to hire lawyers or offer your services."
+      title="Establish Your Account"
+      subtitle="Join the premier legal marketplace to secure elite counsel or offer your specialized services."
     >
       <RegisterForm />
     </AuthShell>

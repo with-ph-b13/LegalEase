@@ -6,18 +6,18 @@ import { Search, Calendar, MessageSquare } from "lucide-react";
 const STEPS = [
   {
     icon: Search,
-    title: "1. Find a Lawyer",
-    desc: "Search our directory of verified legal professionals by specialization, fee, or rating.",
+    title: "1. Discover Elite Counsel",
+    desc: "Browse our curated directory of verified legal experts by specialization, consultation fee, and proven track record.",
   },
   {
     icon: Calendar,
-    title: "2. Book Consultation",
-    desc: "Schedule a secure meeting at a time that works for you with our integrated calendar.",
+    title: "2. Secure a Consultation",
+    desc: "Schedule a confidential meeting at your convenience through our encrypted, integrated calendar.",
   },
   {
     icon: MessageSquare,
-    title: "3. Get Legal Help",
-    desc: "Connect directly with your chosen expert and start resolving your legal matters.",
+    title: "3. Achieve Resolution",
+    desc: "Engage directly with your chosen advocate and initiate strategic resolution of your legal matters.",
   },
 ];
 
@@ -30,7 +30,7 @@ export function HowItWorks() {
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold mb-4 text-white">How LegalEase Works</h2>
           <p className="opacity-80 max-w-2xl mx-auto">
-            We've simplified the process of finding and hiring top-tier legal representation.
+            Experience a streamlined, secure approach to securing world-class legal representation.
           </p>
         </div>
 

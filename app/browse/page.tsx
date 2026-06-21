@@ -59,9 +59,9 @@ export default function BrowsePage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-4">Browse Legal Experts</h1>
+        <h1 className="text-4xl font-bold mb-4">Browse Exceptional Legal Talent</h1>
         <p className="text-lg text-base-content/70">
-          Find the right lawyer for your specific legal needs. Filter by specialization, fee, and availability.
+          Identify the ideal attorney tailored to your specific legal requirements. Filter by expertise, consultation fee, and immediate availability.
         </p>
       </div>
 

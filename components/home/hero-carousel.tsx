@@ -7,19 +7,19 @@ const SLIDES = [
   {
     id: 1,
     title: "Expert Family Law",
-    desc: "Navigate divorce, child custody, and family matters with compassion.",
+    desc: "Navigate divorce, child custody, and sensitive family matters with discretion and compassion.",
     image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=1600",
   },
   {
     id: 2,
     title: "Corporate Defense",
-    desc: "Protect your business with top-tier corporate legal strategies.",
+    desc: "Safeguard your enterprise with elite corporate counsel and strategic legal defense.",
     image: "https://images.unsplash.com/photo-1505664173622-b8146fbbc44c?auto=format&fit=crop&q=80&w=1600",
   },
   {
     id: 3,
     title: "Criminal Defense",
-    desc: "Aggressive representation when your freedom is on the line.",
+    desc: "Uncompromising defense and strategic advocacy when your freedom is on the line.",
     image: "https://images.unsplash.com/photo-1453928582365-b6ad33cbcf64?auto=format&fit=crop&q=80&w=1600",
   },
 ];

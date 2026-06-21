@@ -14,8 +14,8 @@ function LoginInner() {
 
   return (
     <AuthShell
-      title="Welcome back"
-      subtitle="Sign in to continue to your dashboard."
+      title="Welcome Back"
+      subtitle="Securely authenticate to access your professional dashboard."
     >
       {googleError && (
         <div className="alert alert-error text-sm py-2 rounded-lg mb-4">

@@ -20,7 +20,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            Find the <span className="text-primary">Right Legal Expert</span> for Your Case
+            Find & Hire <span className="text-primary">Expert Legal Counsel</span>
           </motion.h1>
           
           <motion.p 
@@ -29,7 +29,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            Connect with top-rated lawyers, schedule consultations, and get the legal support you need. Simple, fast, and secure.
+            Connect with world-class legal professionals, secure confidential consultations, and achieve the best possible outcomes for your case. Fast, secure, and discrete.
           </motion.p>
           
           <motion.div 
