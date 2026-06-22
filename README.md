@@ -89,7 +89,7 @@ To test the application, you can use the seeded demo accounts:
 
 | Role | Email | Password |
 |---|---|---|
-| **Admin** | `admin@legalease.com` | `admin123` |
+| **Admin** | `admin@legalease.com` | `a10admin` |
 | **Lawyer** | `jane@smith.com` | `password123` |
 | **Client** | `john@doe.com` | `password123` |
 
