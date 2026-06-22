@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import { ToastProvider } from "@/components/ui/toast-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { RoleSelectionModal } from "@/components/auth/role-selection-modal";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -41,6 +42,7 @@ export default function RootLayout({
               <Navbar />
               <div className="flex-1">{children}</div>
               <Footer />
+              <RoleSelectionModal />
             </ThemeProvider>
           </ShortlistProvider>
         </AuthProvider>

@@ -22,6 +22,8 @@ interface AuthContextType {
   register: (data: { name: string; email: string; password: string; role: Extract<Role, "user" | "lawyer"> }) => Promise<AuthUser>;
   logout: () => void;
   refresh: () => Promise<void>;
+  needsRoleSelection: boolean;
+  completeRoleSelection: (role: "user" | "lawyer") => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -33,6 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [needsRoleSelection, setNeedsRoleSelection] = useState(false);
 
   const persist = useCallback((nextToken: string | null, nextUser: AuthUser | null) => {
     if (typeof window === "undefined") return;
@@ -70,9 +73,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Check for OAuth token in URL
       const urlParams = new URLSearchParams(window.location.search);
       const urlToken = urlParams.get("token");
+      const isNew = urlParams.get("new");
       if (urlToken) {
         localStorage.setItem(TOKEN_KEY, urlToken);
         window.history.replaceState({}, document.title, window.location.pathname);
+        if (isNew === "1") {
+          setNeedsRoleSelection(true);
+        }
       }
 
       const t = localStorage.getItem(TOKEN_KEY);
@@ -131,8 +138,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (me) setUser(me);
   }, [token, fetchUser]);
 
+  const completeRoleSelection = useCallback(async (newRole: "user" | "lawyer") => {
+    const data = await api.patch<{ token: string; user: AuthUser }>("/api/auth/role", { role: newRole });
+    persist(data.token, data.user);
+    setToken(data.token);
+    setUser(data.user);
+    setNeedsRoleSelection(false);
+  }, [persist]);
+
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, register, logout, refresh }}>
+    <AuthContext.Provider value={{ user, token, loading, login, register, logout, refresh, needsRoleSelection, completeRoleSelection }}>
       {children}
     </AuthContext.Provider>
   );
